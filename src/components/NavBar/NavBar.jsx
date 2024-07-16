@@ -81,11 +81,24 @@ const NavBar = () => {
           <div className="col flex">
             <div className="nav-logo">~/</div>
             <div className="nav-socials">
-              <a href="#">LinkedIn</a>
-              <a href="#">Twitter</a>
-              <a href="#">Instagram</a>
-              <a href="#">GitHub</a>
-              <a href="#">eMail</a>
+              <a href="https://www.linkedin.com/in/adityac4/" target="_blank">
+                LinkedIn
+              </a>
+              <a href="https://x.com/aditya_C24" target="_blank">
+                Twitter
+              </a>
+              <a href="https://www.instagram.com/_aditya300/" target="_blank">
+                Instagram
+              </a>
+              <a href="https://github.com/AdityaC4" target="_blank">
+                GitHub
+              </a>
+              <a href="#" target="_blank">
+                Resume
+              </a>
+              <a href="mailto:adityapchaudhari@gmail.com" target="_blank">
+                eMail
+              </a>
             </div>
           </div>
           <div className="col">
