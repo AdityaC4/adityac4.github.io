@@ -1,11 +1,10 @@
+import "./Hero.css";
+
 const Hero = () => {
   return (
-    <div id="hero" className="section">
-      <h1>Hero Section</h1>
-      <p>
-        Welcome to my portfolio. Scroll down to see more about my experience,
-        technologies, projects, and contact information.
-      </p>
+    <div id="hero" className="section__hero section">
+      <div className="hero__name">Aditya</div>
+      <div className="hero__name">Chaudhari</div>
     </div>
   );
 };

@@ -1,10 +1,11 @@
 import "./App.css";
-import { Contact, Experience, Hero, Portfolio } from "./components";
+import { Contact, Experience, Hero, Portfolio, NavBar } from "./components";
 
 function App() {
   return (
     <div className="container">
       <div className="content">
+        <NavBar />
         <Hero />
         <Experience />
         <Portfolio />

@@ -1,6 +1,20 @@
 body {
-  background-color: black;
-  color: white;
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("./assets/img/background.jpg");
+  background-size: cover;
+  background-position: center;
+  filter: brightness(50%);
+  z-index: -1;
 }
 
 .container {
@@ -32,4 +46,19 @@ body {
   100% {
     transform: translateX(-10%) translateY(-10%);
   }
+}
+
+/* Scrollbar */
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(79, 79, 79);
+  border-radius: 10px;
+  border: 2px solid var(--color-background);
 }
