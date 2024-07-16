@@ -62,13 +62,13 @@ span::before {
 
 .active span {
   transform: rotate(45dec);
-  background: black;
+  background: white;
 }
 
 .active span::before {
   top: unset;
   transform: rotate(-90deg);
-  background: black;
+  background: white;
 }
 
 .active:hover span::before {
