@@ -7,9 +7,6 @@ function App() {
       <div className="content">
         <NavBar />
         <Hero />
-        <Experience />
-        <Portfolio />
-        <Contact />
       </div>
       <div className="fuzzy-overlay"></div>
     </div>

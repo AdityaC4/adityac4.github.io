@@ -25,15 +25,15 @@ const NavBar = () => {
             color: "#fff",
             duration: 0.2,
           },
-          "-=0.1"
+          "-=0.6"
         )
         .from(".flex > div", {
           opacity: 0,
           y: 10,
           stagger: {
-            amount: 0.04,
+            amount: 0.03,
           },
-          duration: 0.4,
+          duration: 0.3,
         })
         .to(
           ".nav-link > a",
@@ -43,9 +43,9 @@ const NavBar = () => {
             stagger: {
               amount: 0.1,
             },
-            duration: 0.8,
+            duration: 0.4,
           },
-          "-=0.4"
+          "-=0.5"
         )
         .from(
           ".nav-footer",
@@ -53,7 +53,7 @@ const NavBar = () => {
             opacity: 0,
             duration: 0.3,
           },
-          "-=0.5"
+          "-=0.6"
         )
         .reverse();
     };
@@ -81,28 +81,24 @@ const NavBar = () => {
           <div className="col flex">
             <div className="nav-logo">~/</div>
             <div className="nav-socials">
-              <a href="#">Behance</a>
+              <a href="#">LinkedIn</a>
               <a href="#">Twitter</a>
               <a href="#">Instagram</a>
-              <a href="#">LinkedIn</a>
-              <a href="#">Medium</a>
+              <a href="#">GitHub</a>
+              <a href="#">eMail</a>
             </div>
           </div>
           <div className="col">
-            <div className="nav-link">
-              <a href="#">Work</a>
-              <div className="nav-item-wrapper"></div>
-            </div>
-            <div className="nav-link">
-              <a href="#">Services</a>
-              <div className="nav-item-wrapper"></div>
-            </div>
             <div className="nav-link">
               <a href="#">About</a>
               <div className="nav-item-wrapper"></div>
             </div>
             <div className="nav-link">
-              <a href="#">Manifesto</a>
+              <a href="#">Blog</a>
+              <div className="nav-item-wrapper"></div>
+            </div>
+            <div className="nav-link">
+              <a href="#">Experience</a>
               <div className="nav-item-wrapper"></div>
             </div>
             <div className="nav-link">
@@ -113,11 +109,11 @@ const NavBar = () => {
         </div>
         <div className="nav-footer">
           <div className="links">
-            <a href="#">Privacy policy</a>
-            <a href="#">Cookie policy</a>
+            {/* <a href="#">Privacy policy</a>
+            <a href="#">Cookie policy</a> */}
           </div>
           <div className="contact">
-            <a href="#">chaud105@msu.edu</a>
+            <a href="#">adityapchaudhari@gmail.com</a>
           </div>
         </div>
       </div>

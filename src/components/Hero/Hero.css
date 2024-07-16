@@ -3,9 +3,10 @@
 }
 
 .section__hero {
-  padding-top: 5rem;
+  padding-top: 12rem;
+  padding-left: 5rem;
 }
 
 .hero__name {
-  font-size: 200px;
+  font-size: 300px;
 }
