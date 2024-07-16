@@ -14,38 +14,47 @@ const NavBar = () => {
     };
 
     const animateOpenNav = () => {
-      t1.to(".nav-container", 0.2, {
+      t1.to(".nav-container", {
         autoAlpha: 1,
         delay: 0.1,
+        duration: 0.2,
       })
         .to(
           ".site-logo",
-          0.2,
           {
             color: "#fff",
+            duration: 0.2,
           },
           "-=0.1"
         )
-        .from(".flex > div", 0.4, {
+        .from(".flex > div", {
           opacity: 0,
           y: 10,
           stagger: {
             amount: 0.04,
           },
+          duration: 0.4,
         })
         .to(
           ".nav-link > a",
-          0.8,
           {
             top: 0,
             ease: "power2.inOut",
             stagger: {
               amount: 0.1,
             },
+            duration: 0.8,
           },
           "-=0.4"
         )
-        .from(".nav-footer", 0.3, { opacity: 0 }, "-=0.5")
+        .from(
+          ".nav-footer",
+          {
+            opacity: 0,
+            duration: 0.3,
+          },
+          "-=0.5"
+        )
         .reverse();
     };
 
@@ -70,7 +79,7 @@ const NavBar = () => {
       <div className="nav-container">
         <div className="nav">
           <div className="col flex">
-            <div className="nav-logo">C/</div>
+            <div className="nav-logo">~/</div>
             <div className="nav-socials">
               <a href="#">Behance</a>
               <a href="#">Twitter</a>

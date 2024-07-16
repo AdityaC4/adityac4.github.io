@@ -32,7 +32,7 @@ body::before {
   inset: -200%;
   background-image: url("./assets/img/texture/noise.png");
   /* filter: invert(100%); */
-  opacity: 15%;
+  opacity: 10%;
   z-index: 10;
   pointer-events: none;
 
