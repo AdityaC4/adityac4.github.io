@@ -1,12 +1,60 @@
-.section {
-  padding: 1rem;
-}
-
+/* Hero Section */
 .section__hero {
-  padding-top: 12rem;
-  padding-left: 5rem;
+  margin-top: 2rem;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-end; /* Align items to the bottom */
+  align-items: flex-start;
+  overflow: hidden;
+  z-index: -1;
 }
 
+/* Hero Content */
+.hero__content {
+  position: absolute; /* Position within the hero section */
+  bottom: 2rem; /* 2rem from the bottom */
+  left: 2rem; /* 2rem from the left */
+}
+
+/* Hero Name Styles */
 .hero__name {
-  font-size: 300px;
+  font-size: 17vw;
+  color: white;
+  white-space: nowrap;
+}
+
+/* Overlay for Images */
+.hero__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  pointer-events: none; /* Ensure the overlay images don't block interactions */
+}
+
+/* Overlay Images */
+.hero__image {
+  position: absolute;
+  object-fit: cover;
+  pointer-events: none; /* Allow interaction with overlay images if needed */
+}
+
+.img1 {
+  top: 21%;
+  left: 63%;
+  rotate: 5deg;
+}
+
+.img2 {
+  top: 61%;
+  right: 70%;
+  width: 20%;
+  filter: brightness(30%) hue-rotate(180deg);
 }

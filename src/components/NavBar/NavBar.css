@@ -2,17 +2,17 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Roboto", sans-serif;
 }
 
 .header {
   width: 100%;
   overflow: hidden;
+  z-index: 1000;
 }
 
 .navbar {
   position: fixed;
-  z-index: 2;
+  z-index: 1000;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -127,11 +127,17 @@ span::before {
 
 .nav-link a {
   position: relative;
-  top: 60px;
+  top: 0;
   text-decoration: none;
-  color: white;
-  font-size: 100px;
+  color: rgb(132, 132, 132);
+  font-size: 80px;
   font-weight: lighter;
+  line-height: 1;
+  transition: color 0.3s ease;
+}
+
+.nav-link a:hover {
+  color: white;
 }
 
 .nav-item-wrapper:after {
