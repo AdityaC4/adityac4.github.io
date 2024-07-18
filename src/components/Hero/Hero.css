@@ -25,6 +25,10 @@
   white-space: nowrap;
 }
 
+.hero__first-name {
+  margin-bottom: -7vw;
+}
+
 /* Overlay for Images */
 .hero__overlay {
   position: absolute;
