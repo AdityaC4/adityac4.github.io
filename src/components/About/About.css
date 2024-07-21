@@ -1,0 +1,51 @@
+:root {
+    --primary-color: #333;
+    --secondary-color: #f0f0f0;
+    --accent-color: #ff6347;
+    --font-size-base: 1rem;
+    --spacing: 2rem;
+}
+
+#about {
+    padding: var(--spacing);
+    margin: var(--spacing) 0;
+    background-color: var(--secondary-color);
+    filter: brightness(80%);
+    text-align: center;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -1;
+}
+
+.about__content {
+    max-width: 800px;
+}
+
+.about__text {
+    font-size: 1.5rem;
+    padding: 1rem;
+    line-height: 1.6;
+    color: var(--primary-color);
+}
+
+.about__quote {
+    font-size: 1.2rem;
+    margin-bottom: 6rem;
+    color: var(--primary-color);
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .about__text {
+        font-size: 1rem;
+        padding: 1rem;
+    }
+
+    .about__quote {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+}

@@ -1,12 +1,18 @@
+import "./About.css";
+
 const About = () => {
     return (
-        <div id="about" className="section">
-            <h1>About</h1>
-            <p>
-                I am Aditya Chaudhari, a programmer who loves simple code and
-                programming languages. You can find me on github <a href="https://github.com/AdityaC4">GitHub</a>
-                or send me an email.
-            </p>
+        <div id="about" className="section section__about">
+            <div className="about__content">
+                <blockquote className="about__quote">
+                    "The doer alone learneth" - Friedrich Nietzsche
+                </blockquote>
+                <p className="about__text">
+                    I am Aditya Chaudhari, a programmer who loves simple code and
+                    is currently obsessed with programming languages and compilers.
+                    I love reverse engineering and networks. I love nature, pizza, and art.
+                </p>
+            </div>
         </div>
     );
 };
