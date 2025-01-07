@@ -1,56 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aditya's Website</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background: #f4f4f9;
-            color: #333;
-            text-align: center;
-        }
-        header {
-            background: #0078d7;
-            color: white;
-            padding: 1em 0;
-        }
-        h1 {
-            margin: 0;
-        }
-        p {
-            margin: 0.5em 0;
-        }
-        footer {
-            background: #333;
-            color: white;
-            padding: 1em 0;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-        a {
-            color: #0078d7;
-            text-decoration: none;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aditya Chaudhari</title>
+  <!-- Link to CSS -->
+  <link rel="stylesheet" href="styles.css" />
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" 
+    rel="stylesheet"
+  />
+  
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <header>
-        <h1>Welcome to My Website</h1>
-        <p>Hi, I'm Aditya. This is my personal website.</p>
-    </header>
-    <main>
-        <p>This is a simple GitHub Pages site. I'm learning web development!</p>
-        <p>Feel free to <a href="https://github.com/aditya">check out my GitHub</a>.</p>
-    </main>
-    <footer>
-        <p>© 2025 Aditya</p>
-    </footer>
+  <!-- Theme Toggle Icon (Top Right) -->
+  <button id="theme-toggle" class="theme-icon">
+    <i class="fas fa-adjust"></i>
+  </button>
+
+  <!-- Header Section -->
+  <header>
+    <h1 class="crt-text">Aditya Chaudhari</h1>
+    <p class="subtitle crt-text">Security Engineer and Full Stack Developer</p>
+  </header>
+  
+  <!-- Main Content -->
+  <main>
+    <!-- About Section -->
+    <section id="about">
+      <h2 class="crt-text">About Me</h2>
+      <p>
+          some text
+     </p>
+    </section>
+
+    <!-- Contacts Section -->
+    <section id="contacts">
+      <h2 class="crt-text">Contact</h2>
+      <ul>
+        <li>
+          <i class="fas fa-envelope"></i>
+          <strong>Email:</strong> 
+          <a href="mailto:chaud105@msu.edu" target="_blank" rel="noopener noreferrer">chaud105@msu.edu</a>
+        </li>
+        <li>
+          <i class="fas fa-phone-alt"></i>
+          <strong>Phone:</strong> 
+          <a href="tel:+15179801451">+1 (517) 980-1451</a>
+        </li>
+        <li>
+          <i class="fab fa-linkedin"></i>
+          <strong>LinkedIn:</strong> 
+          <a href="https://www.linkedin.com/in/AdityaC4/" target="_blank" rel="noopener noreferrer">linkedin.com/in/AdityaC4</a>
+        </li>
+        <li>
+          <i class="fab fa-github"></i>
+          <strong>GitHub:</strong> 
+          <a href="https://github.com/AdityaC4" target="_blank" rel="noopener noreferrer">github.com/AdityaC4</a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+      <h2 class="crt-text">Projects</h2>
+      <ul class="project-grid">
+        <!-- Project 1 -->
+        <li class="project-card">
+          <h3 class="crt-text">Project 1</h3>
+          <a href="#" target="_blank">View Project</a>
+          <p>project 1 descriptions</p>
+        </li>
+        <!-- Project 2 -->
+        <li class="project-card">
+          <h3 class="crt-text">project 2</h3>
+          <a href="#" target="_blank">View Project</a>
+          <p>project 2 descriptions</p>
+        </li>
+        <!-- Add more projects as desired -->
+      </ul>
+    </section>
+  </main>
+
+  <!-- Footer (Optional) -->
+  <footer>
+    <p>Built with 💻 and ☕ by Aditya Chaudhari</p>
+  </footer>
+
+  <!-- Link to JavaScript -->
+  <script src="script.js"></script>
 </body>
 </html>
 
