@@ -229,10 +229,11 @@ section h2 {
 a {
   color: var(--link-color);
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, text-decoration 0.2s ease;
 }
 
 a:hover {
+  text-decoration: underline;
   color: var(--link-hover-color);
 }
 
