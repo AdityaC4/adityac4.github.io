@@ -13,11 +13,12 @@ jobs:
           ruby-version: 3.2
       - name: Install dependencies
         run: |
-          gem install bundler jekyll
-          bundle install || true
+          gem install bundler
+    bundle config path vendor/bundle
+    bundle install
       - name: Build site
         run: |
-          JEKYLL_ENV=production jekyll build -d docs
+          bundle exec jekyll build -d docs
       - name: Deploy to docs
         run: |
           git config --global user.name 'github-actions[bot]'
