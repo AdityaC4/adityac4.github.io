@@ -1,0 +1,27 @@
+name: github pages
+on:
+  push:
+    branches: [main]
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2
+      - name: Install dependencies
+        run: |
+          gem install bundler jekyll
+          bundle install || true
+      - name: Build site
+        run: |
+          JEKYLL_ENV=production jekyll build -d docs
+      - name: Deploy to docs
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add docs
+          git commit -m 'Deploy to docs [skip ci]' || true
+          git push origin HEAD:main

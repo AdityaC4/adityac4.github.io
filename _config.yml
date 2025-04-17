@@ -1,0 +1,15 @@
+title: "adityac4.github.io"
+description: "A minimalist, retro‑cozy digital garden."
+baseurl: ""
+url: "https://adityac4.github.io"
+theme: null
+permalink: /:title/
+plugins:
+  - jekyll-feed
+collections:
+  posts:
+    output: true
+    permalink: /:categories/:title/
+markdown: kramdown
+highlighter: rouge
+exclude: ["new_post.sh"]

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ site.title }}</title>
+  <link rel="stylesheet" href="/assets/css/retro.css">
+</head>
+<body>
+  <header>
+    <pre class="ascii-title">
+      _           _ _         _       _  _      
+     / \   _ __ (_) | ____ _| |_ ___| || | ___ 
+    / _ \ | '_ \| | |/ / _` | __/ _ \ || |/ _ \
+   / ___ \| | | | |   < (_| | ||  __/__   _  __/
+  /_/   \_\_| |_|_|_|\_\__,_|\__\___|  |_|\___|
+    </pre>
+    <button id="menu-toggle">Menu</button>
+    <nav id="menu" class="hidden">
+      <ul>
+        {% assign tags = site.tags | sort %}
+        {% for tag in tags %}
+          <li><a href="/tags/{{ tag[0] | slugify }}/">#{{ tag[0] }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="feed">
+      {% for post in site.posts limit:8 %}
+        <article>
+          <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+          <time>{{ post.date | date: "%Y-%m-%d" }}</time>
+          <div class="excerpt">{{ post.excerpt }}</div>
+        </article>
+      {% endfor %}
+    </section>
+  </main>
+  <footer>
+    <small>© {{ site.time | date: "%Y" }} adityac4 &mdash; <a href="https://github.com/adityac4" target="_blank">GitHub</a> | <a href="https://linkedin.com/in/adityac4" target="_blank">LinkedIn</a> | <a href="mailto:your@email.com">Email</a></small>
+  </footer>
+  <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+    menuToggle.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

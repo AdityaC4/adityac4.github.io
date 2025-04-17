@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello, World! | adityac4.github.io</title>
+  <link rel="stylesheet" href="/assets/css/retro.css">
+</head>
+<body>
+  <header>
+    <a href="/" class="home-link">&#8592; Home</a>
+    <button id="menu-toggle">Menu</button>
+    <nav id="menu" class="hidden">
+      <ul>
+        
+        
+          <li><a href="/tags/meta/">#meta</a></li>
+        
+          <li><a href="/tags/sample/">#sample</a></li>
+        
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <article class="post">
+      <h1>Hello, World!</h1>
+      <time>2025-04-16</time>
+      <p>Welcome to your retro‑cozy digital garden! This is a sample post written in Markdown.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"Hello, world!"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>You can use <strong>Markdown</strong> for formatting.</li>
+  <li>Posts go in the <code class="language-plaintext highlighter-rouge">_posts/</code> folder, named <code class="language-plaintext highlighter-rouge">YYYY-MM-DD-title.md</code>.</li>
+  <li>Tags appear in the menu.</li>
+</ul>
+
+    </article>
+  </main>
+  <footer>
+    <small>© 2025 adityac4 &mdash; <a href="https://github.com/adityac4" target="_blank">GitHub</a> | <a href="https://linkedin.com/in/adityac4" target="_blank">LinkedIn</a> | <a href="mailto:your@email.com">Email</a></small>
+  </footer>
+  <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+    menuToggle.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>
