@@ -14,8 +14,8 @@ jobs:
       - name: Install dependencies
         run: |
           gem install bundler
-    bundle config path vendor/bundle
-    bundle install
+          bundle config path vendor/bundle
+          bundle install
       - name: Build site
         run: |
           bundle exec jekyll build -d docs
