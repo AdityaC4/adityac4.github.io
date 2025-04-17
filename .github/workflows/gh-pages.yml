@@ -1,33 +1,36 @@
-name: github pages
+name: Build and Deploy Jekyll site to GitHub Pages
+
 on:
   push:
     branches: [main]
+
+permissions:
+  contents: write  # required for pushing to gh-pages
+
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Ruby
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2
+
       - name: Install dependencies
         run: |
           gem install bundler
           bundle config path vendor/bundle
           bundle install
-      - name: Ensure docs directory exists
-        run: mkdir -p docs
-      - name: Build site
-        run: |
-          bundle exec jekyll build -d docs
-      - name: Add .nojekyll
-        run: touch docs/.nojekyll
-      - name: Deploy to docs
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git add docs
-          git diff --cached --quiet || git commit -m 'Deploy to docs [skip ci]'
-          git push origin HEAD:main
+
+      - name: Build with Jekyll
+        run: bundle exec jekyll build -d _site
+
+      - name: Deploy to gh-pages branch 🚀
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          publish_branch: gh-pages
