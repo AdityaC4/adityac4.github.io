@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.4">Jekyll</generator><link href="https://adityac4.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://adityac4.github.io/" rel="alternate" type="text/html" /><updated>2025-04-17T01:01:04+00:00</updated><id>https://adityac4.github.io/feed.xml</id><title type="html">adityac4.github.io</title><subtitle>A minimalist, retro‑cozy digital garden.</subtitle><entry><title type="html">Hello, World!</title><link href="https://adityac4.github.io/hello-world/" rel="alternate" type="text/html" title="Hello, World!" /><published>2025-04-16T00:00:00+00:00</published><updated>2025-04-16T00:00:00+00:00</updated><id>https://adityac4.github.io/hello-world</id><content type="html" xml:base="https://adityac4.github.io/hello-world/"><![CDATA[<p>Welcome to your retro‑cozy digital garden! This is a sample post written in Markdown.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"Hello, world!"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>You can use <strong>Markdown</strong> for formatting.</li>
+  <li>Posts go in the <code class="language-plaintext highlighter-rouge">_posts/</code> folder, named <code class="language-plaintext highlighter-rouge">YYYY-MM-DD-title.md</code>.</li>
+  <li>Tags appear in the menu.</li>
+</ul>]]></content><author><name></name></author><category term="meta" /><category term="sample" /><summary type="html"><![CDATA[Welcome to your retro‑cozy digital garden! This is a sample post written in Markdown.]]></summary></entry></feed>
