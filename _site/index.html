@@ -3,51 +3,107 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>adityac4.github.io</title>
-  <link rel="stylesheet" href="/assets/css/retro.css">
+  <title>Byte Sanctuary</title>
+  <link rel="stylesheet" href="/assets/css/garden.css">
+  <script defer src="/assets/js/theme-toggle.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Inter:wght@400;700&family=Fira+Code&display=swap">
 </head>
 <body>
-  <header>
-    <pre class="ascii-title">
-      _           _ _         _       _  _      
-     / \   _ __ (_) | ____ _| |_ ___| || | ___ 
-    / _ \ | '_ \| | |/ / _` | __/ _ \ || |/ _ \
-   / ___ \| | | | |   < (_| | ||  __/__   _  __/
-  /_/   \_\_| |_|_|_|\_\__,_|\__\___|  |_|\___|
-    </pre>
-    <button id="menu-toggle">Menu</button>
-    <nav id="menu" class="hidden">
-      <ul>
-        
-        
-          <li><a href="/tags/meta/">#meta</a></li>
-        
-          <li><a href="/tags/sample/">#sample</a></li>
-        
-      </ul>
+  <header class="site-header">
+    <div class="site-header-row">
+      <img src="/assets/img/byte-logo.png" alt="Byte Sanctuary Logo" class="site-logo">
+      <div class="site-title">Byte Sanctuary</div>
+      <span class="site-header-spacer"></span>
+      <button class="theme-toggle" aria-label="Toggle dark/light mode" aria-pressed="false" title="Toggle dark/light mode"></button>
+    </div>
+    <hr class="divider">
+    <nav class="nav-bar">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/about/" class="nav-link">About</a>
     </nav>
+    <hr class="divider">
   </header>
   <main>
-    <section class="feed">
+    <div class="wrapper"><section class="latest-hero">
+    <a href="/hello-world/" class="latest-hero-tile">
       
-        <article>
-          <h2><a href="/hello-world/">Hello, World!</a></h2>
-          <time>2025-04-16</time>
-          <div class="excerpt"><p>Welcome to your retro‑cozy digital garden! This is a sample post written in Markdown.</p>
+        <img class="latest-hero-img" src="/assets/img/fallback.jpg" alt="Hello, World!">
+      
+      <div class="latest-hero-content">
+        <div class="latest-hero-title">Hello, World!</div>
+        <div class="latest-hero-meta">Apr 16, 2025</div>
+        <div class="latest-hero-desc">Welcome to your retro‑cozy digital garden! This is a sample post written in Markdown.
 </div>
-        </article>
+      </div>
+    </a>
+  </section>
+  <hr class="divider">
+  <section class="featured-row">
+    <div class="featured-horizontal">
       
-    </section>
+      
+        <a href="/hello-world/" class="featured-post">
+          
+            <img class="featured-img" src="/assets/img/fallback.jpg" alt="Hello, World!">
+          
+          <div class="featured-title">Hello, World!</div>
+          <div class="featured-meta">Apr 16, 2025</div>
+        </a>
+        
+          <hr class="vertical-divider">
+        
+      
+        <a href="/most-popular/" class="featured-post">
+          
+            <img class="featured-img" src="/assets/img/popular1.jpg" alt="Most Popular Post">
+          
+          <div class="featured-title">Most Popular Post</div>
+          <div class="featured-meta">Apr 12, 2025</div>
+        </a>
+        
+          <hr class="vertical-divider">
+        
+      
+        <a href="/another-popular/" class="featured-post">
+          
+            <img class="featured-img" src="/assets/img/popular2.jpg" alt="Another Popular Post">
+          
+          <div class="featured-title">Another Popular Post</div>
+          <div class="featured-meta">Apr 10, 2025</div>
+        </a>
+        
+      
+    </div>
+  </section>
+  <section class="vertical-stack">
+    <div class="vertical-list">
+      
+      
+        <a href="/third-popular/" class="vertical-post">
+          
+            <img class="vertical-img" src="/assets/img/popular3.jpg" alt="Third Popular Post">
+          
+          <div class="vertical-content">
+            <h3 class="vertical-title">Third Popular Post</h3>
+            <time class="vertical-meta">Apr 05, 2025</time>
+            <p class="vertical-desc">This is a third post to fill out the Most Popular row on the homepage.
+</p>
+          </div>
+        </a>
+        
+      
+    </div>
+    <a class="view-all-btn bottom smaller lighter" href="/posts/">View All</a>
+  </section>
+</div>
+
   </main>
   <footer>
-    <small>© 2025 adityac4 &mdash; <a href="https://github.com/adityac4" target="_blank">GitHub</a> | <a href="https://linkedin.com/in/adityac4" target="_blank">LinkedIn</a> | <a href="mailto:your@email.com">Email</a></small>
+    <div class="footer-links">
+      <a href="https://github.com/adityac4" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/in/adityac4" target="_blank">LinkedIn</a>
+      <a href="mailto:your@email.com">Email</a>
+    </div>
   </footer>
-  <script>
-    const menuToggle = document.getElementById('menu-toggle');
-    const menu = document.getElementById('menu');
-    menuToggle.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
-    });
-  </script>
 </body>
 </html>

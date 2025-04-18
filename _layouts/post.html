@@ -1,40 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.title }} | {{ site.title }}</title>
-  <link rel="stylesheet" href="/assets/css/retro.css">
-</head>
-<body>
-  <header>
-    <a href="/" class="home-link">&#8592; Home</a>
-    <button id="menu-toggle">Menu</button>
-    <nav id="menu" class="hidden">
-      <ul>
-        {% assign tags = site.tags | sort %}
-        {% for tag in tags %}
-          <li><a href="/tags/{{ tag[0] | slugify }}/">#{{ tag[0] }}</a></li>
-        {% endfor %}
-      </ul>
-    </nav>
-  </header>
-  <main>
-    <article class="post">
-      <h1>{{ page.title }}</h1>
-      <time>{{ page.date | date: "%Y-%m-%d" }}</time>
-      {{ content }}
-    </article>
-  </main>
-  <footer>
-    <small>© {{ site.time | date: "%Y" }} adityac4 &mdash; <a href="https://github.com/adityac4" target="_blank">GitHub</a> | <a href="https://linkedin.com/in/adityac4" target="_blank">LinkedIn</a> | <a href="mailto:your@email.com">Email</a></small>
-  </footer>
-  <script>
-    const menuToggle = document.getElementById('menu-toggle');
-    const menu = document.getElementById('menu');
-    menuToggle.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
-    });
-  </script>
-</body>
-</html>
+---
+layout: default
+title: "{{ page.title }}"
+---
+<div class="wrapper">
+  {% if page.image %}
+    <img class="post-hero-img" src="{{ page.image }}" alt="{{ page.title }}">
+  {% else %}
+    <img class="post-hero-img" src="/assets/img/fallback.jpg" alt="{{ page.title }}">
+  {% endif %}
+  <div class="post-content">
+    <h1 class="post-title">{{ page.title }}</h1>
+    <div class="post-meta">{{ page.date | date: "%b %d, %Y" }}</div>
+    {{ content }}
+  </div>
+</div>
