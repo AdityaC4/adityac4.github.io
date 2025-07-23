@@ -3,16 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aditya Chaudhari</title>
+    <title>Example - Aditya Chaudhari</title>
     <link
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script>
     <script>
       (function () {
         try {
           var theme = localStorage.getItem("theme");
-          if (theme && theme !== "gray") {
+          if (theme && theme !== "white") {
             document.documentElement.classList.add("theme-" + theme);
           }
         } catch (e) {}
@@ -42,58 +48,41 @@
     </div>
 
     <nav>
-      <a href="index.html">Home</a>
-      <a href="blogs.html">Blogs</a>
-      <!-- <a href="letterboxd.html">Letterboxd</a> -->
+      <a href="/index.html">Home</a>
+      <a href="/blogs.html">Blogs</a>
     </nav>
 
-    <h1>Aditya Chaudhari</h1>
+    <h1>Example</h1>
+    <p class="blog-meta">April 1, 2025</p>
 
     <p>
-      Software engineer interested in compilers, optimization, and low-level
-      development.
+      This is an example blog post. You can use this template to create your own
+      posts. Just update the title, date, and content as needed.
     </p>
 
-    <h2>About</h2>
-    <p>null</p>
-
-    <h2>Projects</h2>
+    <h2>Section Heading</h2>
+    <p>
+      Write your content here. You can use <strong>bold</strong>,
+      <em>italic</em>, and other HTML tags.
+    </p>
     <ul>
-      <li><a href="#">name</a> - Description</li>
+      <li>List item one</li>
+      <li>List item two</li>
+      <li>List item three</li>
     </ul>
 
-    <h2>Writing</h2>
-    <ul>
-      <li>
-        <a href="_blogs/07-23-25_Example.html">Example</a>
-        - Description
-      </li>
-    </ul>
+    <h2>Code Example</h2>
+    <p>You can include code blocks with syntax highlighting:</p>
+    <pre><code class="language-c">
+#include &lt;stdio.h&gt;
 
-    <h2>Experience</h2>
-    <ul>
-      <li><strong>Position</strong> @ Company (start - end)</li>
-    </ul>
+int main() {
+    printf("Hello, world!\n");
+    return 0;
+}
+    </code></pre>
 
-    <div class="contact">
-      <p>
-        Email:
-        <a href="mailto:adityapchaudhari@gmail.com"
-          >adityapchaudhari@gmail.com</a
-        >
-        |
-        <a href="https://github.com/adityac4" target="_blank" rel="noopener"
-          >GitHub</a
-        >
-        |
-        <a
-          href="https://linkedin.com/in/adityac4"
-          target="_blank"
-          rel="noopener"
-          >LinkedIn</a
-        >
-      </p>
-    </div>
+    <p>That's it! Add more sections as needed for your post.</p>
 
     <script src="/script.js"></script>
   </body>

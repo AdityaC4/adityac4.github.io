@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "gen-manifest": "node generateManifest.js",
+    "start": "npm run gen-manifest && live-server",
+    "predeploy": "npm run gen-manifest"
+  },
+  "devDependencies": {
+    "glob": "^11.0.3"
+  }
+}
