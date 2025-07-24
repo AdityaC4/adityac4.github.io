@@ -12,7 +12,7 @@
       (function () {
         try {
           var theme = localStorage.getItem("theme");
-          if (theme && theme !== "gray") {
+          if (theme && theme !== "dark") {
             document.documentElement.classList.add("theme-" + theme);
           }
         } catch (e) {}
@@ -22,23 +22,9 @@
   </head>
   <body>
     <div class="theme-selector">
-      <div
-        class="theme-btn white"
-        onclick="setTheme('white')"
-        title="White"
-      ></div>
-      <div
-        class="theme-btn cream"
-        onclick="setTheme('cream')"
-        title="Cream"
-      ></div>
-      <div class="theme-btn gray" onclick="setTheme('gray')" title="Gray"></div>
       <div class="theme-btn dark" onclick="setTheme('dark')" title="Dark"></div>
-      <div
-        class="theme-btn terminal"
-        onclick="setTheme('terminal')"
-        title="Terminal"
-      ></div>
+      <div class="theme-btn rustic" onclick="setTheme('rustic')" title="Rustic"></div>
+      <div class="theme-btn white" onclick="setTheme('white')" title="White"></div>
     </div>
 
     <nav>
