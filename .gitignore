@@ -3,8 +3,6 @@ node_modules/
 npm-debug.log*
 yarn-error.log*
 
-blogs.json
-
 .DS_Store
 .vscode/
 .env
