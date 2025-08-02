@@ -70,13 +70,17 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
 a:visited {
   color: var(--link-visited);
 }
+
+a:hover,
+a:visited:hover {
+  background-color: var(--link-color);
+  color: var(--bg-color);
+  text-decoration: none;
+}
+
 
 ul {
   list-style-type: none;

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Me Learning LLVM - Aditya Chaudhari</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script>
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem("theme");
+        if (theme && theme !== "dark") {
+          document.documentElement.classList.add("theme-" + theme);
+        }
+      } catch (e) { }
+    })();
+  </script>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+  <div class="theme-selector">
+    <div class="theme-btn dark" onclick="setTheme('dark')" title="Dark"></div>
+    <div class="theme-btn rustic" onclick="setTheme('rustic')" title="Rustic"></div>
+    <div class="theme-btn white" onclick="setTheme('white')" title="White"></div>
+  </div>
+
+  <nav>
+    <a href="/index.html">Home</a>
+    <a href="/blogs.html">Blogs</a>
+  </nav>
+
+  <h1>Learning LLVM</h1>
+  <p class="blog-meta">August 2, 2025</p>
+
+  <p>
+    Just me trying to learn some some.
+  </p>
+
+  <h2>Section Heading</h2>
+  <p>
+    Write your content here. You can use <strong>bold</strong>,
+    <em>italic</em>, and other HTML tags.
+  </p>
+  <ul>
+    <li>List item one</li>
+    <li>List item two</li>
+    <li>List item three</li>
+  </ul>
+
+  <h2>Code Example</h2>
+  <p>You can include code blocks with syntax highlighting:</p>
+  <!-- prettier-ignore -->
+  <pre><code class="language-c">
+      #include &lt;stdio.h&gt;
+
+      int main() {
+      printf("Hello, world!\n");
+      return 0;
+      }
+    </code></pre>
+
+  <p>That's it! Add more sections as needed for your post.</p>
+
+  <script src="/script.js"></script>
+</body>
+
+</html>
