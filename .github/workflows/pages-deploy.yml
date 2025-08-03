@@ -1,65 +1,18 @@
-name: "Build and Deploy"
+name: Zola on GitHub Pages
 
-on:
-  push:
-    branches:
-      - main
-      - master
-    paths-ignore:
-      - .gitignore
-      - README.md
-      - LICENSE
-
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages:    write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+on: 
+ push:
+  branches:
+   - main
 
 jobs:
   build:
+    name: Publish site
     runs-on: ubuntu-latest
-
     steps:
-      # 1) checkout your repo
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      # 2) install Node.js & your deps
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm ci
-
-      # 3) regenerate blogs.json
-      - name: Generate blog manifest
-        run: npm run gen-manifest
-
-      # 4) publish *all* files (your HTML/CSS/JS, _blogs/, blogs.json, etc.)
-      - name: Upload artifact for Pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
+    - name: Checkout main
+      uses: actions/checkout@v4
+    - name: Build and deploy
+      uses: shalzz/zola-deploy-action@v0.21.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
