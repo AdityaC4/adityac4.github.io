@@ -1,17 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>aditya chaudhari</title>
+    <link rel="stylesheet" href="{{ get_url(path='style.css') }}" />
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <title>aditya chaudhari</title>
-</head>
-
-<body>
-  <section class="section">
-    <div class="container">
-      {% block content %} {% endblock content %}
-    </div>
-  </section>
-</body>
-
+  <body>
+    <section class="section">
+      <div class="container">
+        <!-- Navigation -->
+        <nav class="nav">
+          <div class="nav-container">
+            <a href="{{ get_url(path='/') }}" class="nav-brand">
+              <img
+                src="{{ get_url(path='images/face.jpg') }}"
+                alt="Aditya"
+                class="nav-avatar"
+              />
+              aditya's blog
+            </a>
+            <ul class="nav-links">
+              <li>
+                <a href="{{ get_url(path='/') }}" class="nav-link">/Home</a>
+              </li>
+              <li>
+                <a
+                  href="{{ get_url(path='@/blog/_index.md') }}"
+                  class="nav-link"
+                  >/Blog</a
+                >
+              </li>
+              <li>
+                <a
+                  href="{{ get_url(path='@/tags/_index.md') }}"
+                  class="nav-link"
+                  >/Tags</a
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div class="align-container">
+          <!-- Main content -->
+          {% block content %} {% endblock content %}
+        </div>
+      </div>
+    </section>
+  </body>
 </html>

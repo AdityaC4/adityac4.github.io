@@ -1,9 +1,18 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
+<div class="home-intro">
+  <blockquote>finding meaning in segfaults (and life).</blockquote>
+  <!-- <p><a href="{{ get_url(path='@/blog/_index.md') }}">Posts</a>.</p> -->
+</div>
 
-{% block content %}
-<h1 class="title">
-  aditya chaudhari
-</h1>
-finding meaning in segfaults (and life).
-<p><a href="{{ get_url(path='@/blog/_index.md') }}">Posts</a>.</p>
+<!-- About section with lorem ipsum as shown in wireframe -->
+<div class="about-section">
+  <h2>about me</h2>
+  <p>
+    Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem lorem
+    ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem
+    lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+    lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+    lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem impsum.
+  </p>
+</div>
 {% endblock content %}

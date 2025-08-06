@@ -1,9 +1,30 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
+<article class="post">
+  <header class="post-header">
+    <div class="post-header-content">
+      <div class="post-title-section">
+        <h1 class="title">{{ page.title }}</h1>
+        {% if page.description %}
+        <p class="post-description">{{ page.description }}</p>
+        {% endif %}
+      </div>
+      <div class="post-meta">
+        <div class="post-date">
+          <strong>{{ page.date | date(format="%Y-%m-%d") }}</strong>
+        </div>
+        {% if page.taxonomies.tags %}
+        <div class="post-tags">
+          {% for tag in page.taxonomies.tags %}
+          <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}" class="tag"
+            >{{ tag }}</a
+          >
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </header>
 
-{% block content %}
-<h1 class="title">
-  {{ page.title }}
-</h1>
-<p class="subtitle"><strong>{{ page.date }}</strong></p>
-{{ page.content | safe }}
+  <div class="post-content">{{ page.content | safe }}</div>
+</article>
 {% endblock content %}
