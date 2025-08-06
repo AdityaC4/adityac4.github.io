@@ -4,6 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>aditya chaudhari</title>
+    <link
+      rel="icon"
+      type="image/jpg"
+      href="{{ get_url(path='images/face.jpg') }}"
+    />
     <link rel="stylesheet" href="{{ get_url(path='style.css') }}" />
   </head>
 
@@ -23,20 +28,20 @@
             </a>
             <ul class="nav-links">
               <li>
-                <a href="{{ get_url(path='/') }}" class="nav-link">/Home</a>
+                <a href="{{ get_url(path='/') }}" class="nav-link">/home</a>
               </li>
               <li>
                 <a
                   href="{{ get_url(path='@/blog/_index.md') }}"
                   class="nav-link"
-                  >/Blog</a
+                  >/posts</a
                 >
               </li>
               <li>
                 <a
                   href="{{ get_url(path='@/tags/_index.md') }}"
                   class="nav-link"
-                  >/Tags</a
+                  >/tags</a
                 >
               </li>
             </ul>
