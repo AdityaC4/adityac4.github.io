@@ -10,6 +10,27 @@
       href="{{ get_url(path='images/face.jpg') }}"
     />
     <link rel="stylesheet" href="{{ get_url(path='style.css') }}" />
+    <script>
+      // Make all external links open in new tab
+      document.addEventListener('DOMContentLoaded', function() {
+        const links = document.querySelectorAll('a[href^="http"]');
+        const currentDomain = window.location.hostname;
+        
+        links.forEach(link => {
+          try {
+            const linkUrl = new URL(link.href);
+            // Only open external links in new tab, not internal navigation
+            if (linkUrl.hostname !== currentDomain) {
+              link.setAttribute('target', '_blank');
+              link.setAttribute('rel', 'noopener noreferrer');
+            }
+          } catch (e) {
+            // If URL parsing fails, skip this link
+            console.warn('Could not parse URL:', link.href);
+          }
+        });
+      });
+    </script>
   </head>
 
   <body>

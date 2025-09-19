@@ -15,7 +15,7 @@
           {% endif %}
         </div>
         <div class="blog-info">
-          <div class="blog-title">{{ page.title }}</div>
+          <div class="blog-title">{{ page.title | markdown(inline=true) | safe }}</div>
           <div class="blog-description">
             {% if page.description %} {{ page.description }} {% else %} Blog
             description... {% endif %}

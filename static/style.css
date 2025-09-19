@@ -7,7 +7,7 @@
   --font-serif: "IBM Plex Serif", serif;
   --primary-font: var(--font-serif); /* Change this to switch between fonts */
 
-  --color-bg: #ececea; /* slightly darker off-white */
+  --color-bg: #F6F6F7; /* winter snow fall */
   --color-text: #201921; /* deeper charcoal */
   --color-text-light: #9e9e9e; /* softer meta/labels */
   --color-border: #b71b2f; /* rich dark crimson */
@@ -65,19 +65,13 @@ body {
   right: var(--spacing-lg);
 }
 
+
 /* Navigation */
 .nav {
   border-bottom: 3px solid var(--color-text);
   margin-bottom: var(--spacing-xl);
   padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-md)
     var(--spacing-lg);
-  background-image: repeating-linear-gradient(
-    90deg,
-    transparent,
-    transparent 2px,
-    rgba(70, 56, 72, 0.04) 2px,
-    rgba(70, 56, 72, 0.04) 4px
-  );
   margin-left: calc(-1 * var(--spacing-lg));
   margin-right: calc(-1 * var(--spacing-lg));
   margin-top: calc(-1 * var(--spacing-lg));
@@ -177,13 +171,14 @@ blockquote {
 /* Typography */
 .title {
   font-family: var(--font-mono);
-  font-size: 2.5rem;
+  font-size: 2.0rem;
   font-weight: 700;
   margin-bottom: var(--spacing-md);
   color: var(--color-text);
   position: relative;
   /* text-transform: uppercase; */
   letter-spacing: 0.1em;
+  line-height: 1.2;
 }
 
 .title::after {
@@ -228,6 +223,7 @@ blockquote {
   background-color: var(--color-hover);
   border-color: var(--color-text);
   text-decoration: none;
+  color: white;
 }
 
 /* Blog listing styles */
@@ -273,11 +269,9 @@ blockquote {
 .blog-image {
   width: 160px;
   height: 100px;
-  background-color: var(--color-accent);
+  background-color: transparent;
   border-radius: 0;
-  border: 2px solid var(--color-text);
   position: relative;
-  box-shadow: inset 8px 8px 0px rgba(70, 56, 72, 0.3);
   overflow: hidden;
 }
 
@@ -286,7 +280,7 @@ blockquote {
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: brightness(0.7) contrast(1.1);
+  filter: brightness(1.0) contrast(1.0);
 }
 
 .image-credit {
@@ -481,23 +475,28 @@ blockquote {
 
 .post-content code {
   font-family: var(--font-mono);
-  background-color: var(--color-hover);
+  background-color: #e8e8e8;
+  color: var(--color-text);
   padding: 2px 4px;
   border-radius: 3px;
   font-size: 0.9em;
+  border: 1px solid #d0d0d0;
 }
 
 .post-content pre {
-  background-color: var(--color-hover);
-  padding: var(--spacing-md);
-  border-radius: 6px;
   overflow-x: auto;
   margin-bottom: var(--spacing-md);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-text-light) transparent;
 }
 
 .post-content pre code {
+  font-family: var(--font-mono);
   background: none;
   padding: 0;
+  border: none;
+  border-radius: 0;
+  font-size: inherit;
 }
 
 .post-content blockquote {
@@ -515,7 +514,10 @@ blockquote {
 
 .post-content a:hover {
   background-color: var(--color-hover);
+  color: white;
 }
+
+
 
 /* Tags page styles */
 .tags-list {
