@@ -532,6 +532,29 @@ blockquote {
   padding: var(--spacing-xs) var(--spacing-sm);
 }
 
+/* Mermaid diagram styling - scrollable */
+.mermaid {
+  overflow: auto;
+  max-height: 500px;
+}
+
+/* Make Mermaid text larger and more readable */
+.mermaid svg {
+  font-size: 18px !important;
+  width: 150% !important;
+  height: auto !important;
+}
+
+.mermaid .node .label {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+}
+
+.mermaid .edgeLabel {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+
 /* Responsive design */
 @media (max-width: 1110px) {
   .container::before,

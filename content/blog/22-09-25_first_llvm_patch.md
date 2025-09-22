@@ -1,6 +1,6 @@
 +++
 title = "My First LLVM Patch: Making AVX/AVX512 Subvector Insert Intrinsics `constexpr`"
-date = 2025-09-18
+date = 2025-09-22
 description = "Me actually learning LLVM"
 
 [taxonomies]
@@ -42,6 +42,27 @@ The logic is the same in both:
 4. Copy over the subvector lane into the base.
 
 It’s not hard logic. But LLVM’s interpreters work at a pretty low level, and everything is abstracted (you deal with `APValue` and `Pointer` wrappers, type metadata, etc). Every copy feels like handling memory with oven mitts.
+
+{% mermaid() %}
+flowchart LR
+    A["_mm256_insertf128_ps(...) in user code"] --> B[Clang Parser]
+    B --> C["AST: CallExpr to builtin wrapper"]
+    C --> D{"Constant Evaluation?<br/>(in constexpr/constinit)"}
+    D -- "No" --> E[Emit IR normally]
+    D -- "Yes" --> F["ExprConstant.cpp<br/>VectorExprEvaluator::VisitCallExpr"]
+    F --> G{Builtin supported?}
+    G -- "Yes" --> H[Evaluate lanes, build APValue]
+    H --> I[Constant-folded value available to Sema]
+    G -- "No" --> J["Bytecode path:<br/>InterpBuiltin.cpp::interp_*"]
+    J --> K["Execute on constexpr VM,<br/>produce APValue"]
+    I --> L[CodeGen uses folded constant]
+    K --> L
+    subgraph "Headers / Builtins"
+      M[BuiltinsX86.td maps intrinsics] --> N["clang/include/clang/Headers/..."]
+    end
+    M -.-> C
+    N -.-> C
+{% end %}
 
 ## BuiltinsX86.td: The Treasure Map
 
@@ -96,7 +117,7 @@ Issue: [#157709](https://github.com/llvm/llvm-project/issues/157709)
 I learned more than I expected:
 
 * About `constexpr`, sure. But also about Clang internals, how intrinsics flow through the frontend, and the lovely balance between AST and interpreter.
-* LLVM has a steep curve, but the community’s been welcoming and helpful. (Special thanks to @RKSimon and @tbaederr!)
+* LLVM has a steep curve, but the community’s been welcoming and helpful. (Special thanks to the reviewers!)
 * It felt good to contribute something useful. Even if it's "just" `constexpr` for a few AVX intrinsics, it's a real feature used by real code.
 
 
