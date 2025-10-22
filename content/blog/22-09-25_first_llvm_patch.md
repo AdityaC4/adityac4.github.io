@@ -4,7 +4,7 @@ date = 2025-09-22
 description = "Me actually learning LLVM"
 
 [taxonomies]
-tags = ["LLVM", "clang"]
+tags = ["LLVM", "clang", "constexpr"]
 
 [extra]
 image = "images/LLVM.png"
