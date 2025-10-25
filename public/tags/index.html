@@ -7,9 +7,9 @@
     <link
       rel="icon"
       type="image/jpg"
-      href="{{ get_url(path='images/face.jpg') }}"
+      href="https://adityac4.github.io/images/face.jpg"
     />
-    <link rel="stylesheet" href="{{ get_url(path='style.css') }}" />
+    <link rel="stylesheet" href="https://adityac4.github.io/style.css" />
     <script>
       // Make all external links open in new tab
       document.addEventListener('DOMContentLoaded', function() {
@@ -39,11 +39,21 @@
         <!-- Navigation -->
         <nav class="nav">
           <div class="nav-container">
-            <a href="{{ get_url(path='/') }}" class="nav-brand">aditya chaudhari</a>
+            <a href="https://adityac4.github.io" class="nav-brand">
+              <img
+                src="https://adityac4.github.io/images/face.jpg"
+                alt="Aditya"
+                class="nav-avatar"
+              />
+              aditya's blog
+            </a>
             <ul class="nav-links">
               <li>
+                <a href="https://adityac4.github.io" class="nav-link">/home</a>
+              </li>
+              <li>
                 <a
-                  href="{{ get_url(path='@/blog/_index.md') }}"
+                  href="https://adityac4.github.io/blog/"
                   class="nav-link"
                   >/posts</a
                 >
@@ -57,7 +67,7 @@
               </li>
               <li>
                 <a
-                  href="{{ get_url(path='@/tags/_index.md') }}"
+                  href="https://adityac4.github.io/tags/"
                   class="nav-link"
                   >/tags</a
                 >
@@ -67,7 +77,31 @@
         </nav>
         <div class="align-container">
           <!-- Main content -->
-          {% block content %} {% endblock content %}
+          
+<h1 class="title">TAGS_</h1>
+
+<ul class="tags-list">
+  
+  <li>
+    <a href="https://adityac4.github.io/tags/clang/" class="tag"
+      >clang (2)</a
+    >
+  </li>
+  
+  <li>
+    <a href="https://adityac4.github.io/tags/constexpr/" class="tag"
+      >constexpr (2)</a
+    >
+  </li>
+  
+  <li>
+    <a href="https://adityac4.github.io/tags/llvm/" class="tag"
+      >LLVM (2)</a
+    >
+  </li>
+  
+</ul>
+
         </div>
       </div>
     </section>

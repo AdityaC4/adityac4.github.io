@@ -7,9 +7,9 @@
     <link
       rel="icon"
       type="image/jpg"
-      href="{{ get_url(path='images/face.jpg') }}"
+      href="https://adityac4.github.io/images/face.jpg"
     />
-    <link rel="stylesheet" href="{{ get_url(path='style.css') }}" />
+    <link rel="stylesheet" href="https://adityac4.github.io/style.css" />
     <script>
       // Make all external links open in new tab
       document.addEventListener('DOMContentLoaded', function() {
@@ -39,11 +39,21 @@
         <!-- Navigation -->
         <nav class="nav">
           <div class="nav-container">
-            <a href="{{ get_url(path='/') }}" class="nav-brand">aditya chaudhari</a>
+            <a href="https://adityac4.github.io" class="nav-brand">
+              <img
+                src="https://adityac4.github.io/images/face.jpg"
+                alt="Aditya"
+                class="nav-avatar"
+              />
+              aditya's blog
+            </a>
             <ul class="nav-links">
               <li>
+                <a href="https://adityac4.github.io" class="nav-link">/home</a>
+              </li>
+              <li>
                 <a
-                  href="{{ get_url(path='@/blog/_index.md') }}"
+                  href="https://adityac4.github.io/blog/"
                   class="nav-link"
                   >/posts</a
                 >
@@ -57,7 +67,7 @@
               </li>
               <li>
                 <a
-                  href="{{ get_url(path='@/tags/_index.md') }}"
+                  href="https://adityac4.github.io/tags/"
                   class="nav-link"
                   >/tags</a
                 >
@@ -67,7 +77,30 @@
         </nav>
         <div class="align-container">
           <!-- Main content -->
-          {% block content %} {% endblock content %}
+          
+<article class="page">
+  <header class="page-header">
+    <h1 class="title">CV</h1>
+    
+  </header>
+  <div class="page-content">
+    <div class="cv-embed">
+  <object
+    data="/cv/Aditya_Chaudhari_CV.pdf"
+    type="application/pdf"
+    width="100%"
+    height="900px"
+  >
+    <p>
+      Unable to display the PDF in your browser.
+      <a href="/cv/Aditya_Chaudhari_CV.pdf">Download the CV</a>.
+    </p>
+  </object>
+</div>
+
+  </div>
+</article>
+
         </div>
       </div>
     </section>

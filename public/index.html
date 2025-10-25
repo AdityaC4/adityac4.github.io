@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>aditya chaudhari</title>
+    <link
+      rel="icon"
+      type="image/jpg"
+      href="https://adityac4.github.io/images/face.jpg"
+    />
+    <link rel="stylesheet" href="https://adityac4.github.io/style.css" />
+    <script>
+      // Make all external links open in new tab
+      document.addEventListener('DOMContentLoaded', function() {
+        const links = document.querySelectorAll('a[href^="http"]');
+        const currentDomain = window.location.hostname;
+        
+        links.forEach(link => {
+          try {
+            const linkUrl = new URL(link.href);
+            // Only open external links in new tab, not internal navigation
+            if (linkUrl.hostname !== currentDomain) {
+              link.setAttribute('target', '_blank');
+              link.setAttribute('rel', 'noopener noreferrer');
+            }
+          } catch (e) {
+            // If URL parsing fails, skip this link
+            console.warn('Could not parse URL:', link.href);
+          }
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <section class="section">
+      <div class="container">
+        <!-- Navigation -->
+        <nav class="nav">
+          <div class="nav-container">
+            <a href="https://adityac4.github.io" class="nav-brand">
+              <img
+                src="https://adityac4.github.io/images/face.jpg"
+                alt="Aditya"
+                class="nav-avatar"
+              />
+              aditya's blog
+            </a>
+            <ul class="nav-links">
+              <li>
+                <a href="https://adityac4.github.io" class="nav-link">/home</a>
+              </li>
+              <li>
+                <a
+                  href="https://adityac4.github.io/blog/"
+                  class="nav-link"
+                  >/posts</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/cv/"
+                  class="nav-link"
+                  >/cv</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://adityac4.github.io/tags/"
+                  class="nav-link"
+                  >/tags</a
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div class="align-container">
+          <!-- Main content -->
+          
+<div class="home-intro">
+  <blockquote>finding meaning in segfaults (and life).</blockquote>
+</div>
+  <div class="about-section">
+    <h2>about me</h2>
+    <p>i'm aditya. i like compilers, low-level systems, and philosophy.</p>
+    <p>currently learning my way through LLVM and related chaos.</p>
+    <p>i plan to write things down when i finally start to make sense.</p>
+  <br />
+  <p>
+    you can find me on <a href="https://github.com/AdityaC4">github</a> and <a href="https://www.linkedin.com/in/AdityaC4/">linkedin</a>.
+  </p>
+  <p>
+    you can also email me at <a href="mailto:adityachaudhari@gmail.com">adityachaudhari@gmail.com</a>.
+  </p>
+  <br />
+    <div class="current-work">
+      <h2>current work</h2>
+      <p>
+        contributing to LLVM/Clang, focusing on constexpr evaluation and 
+        SIMD optimization. <a href="/blog/">writing about the experience</a>.
+      </p>
+    </div>
+    <div class="research-highlights">
+      <h2>research highlights</h2>
+      <ul>
+        <li>
+          building a <a href="https://github.com/AdityaC4/tubular-upgrade">WebAssembly compiler autotuning pipeline</a> with inlining/unrolling experiments and early speedups on loop-heavy benchmarks.
+        </li>
+        <li>
+          authored the IO500-based analysis of MSU HPCC storage; the <a href="https://drive.google.com/file/d/1rbJAyYct-YxjjYaLmvtdXvnf1R_yTLOH/view">technical report</a> now guides infrastructure tuning decisions.
+        </li>
+        <li>
+          evaluated campus RFID access control security (MIFARE Classic and HID/iCLASS); findings documented in <a href="https://drive.google.com/file/d/14b2meTv7yV5Vxdmj9DeGyfoxZK6-NOMI/view">internal reports</a>.
+        </li>
+        <li>
+          upstreamed constexpr support for x86 vector intrinsics to LLVM: <a href="https://github.com/llvm/llvm-project/pull/158778">PR 158778</a> and <a href="https://github.com/llvm/llvm-project/pull/161302">PR 161302</a>.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+        </div>
+      </div>
+    </section>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+  </body>
+</html>
