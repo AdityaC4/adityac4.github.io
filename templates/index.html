@@ -2,43 +2,63 @@
 <div class="home-intro">
   <blockquote>finding meaning in segfaults (and life).</blockquote>
 </div>
-  <div class="about-section">
-    <h2>about me</h2>
-    <p>i'm aditya. i like compilers, low-level systems, and philosophy.</p>
-    <p>currently learning my way through LLVM and related chaos.</p>
-    <p>i plan to write things down when i finally start to make sense.</p>
+<div class="about-section">
+  <h2>about me</h2>
+  <p>i'm aditya. i like compilers, low-level systems, and philosophy.</p>
+  <p>currently learning my way through LLVM and related chaos.</p>
+  <p>i plan to write things down when i finally start to make sense.</p>
   <br />
   <p>
-    you can find me on <a href="https://github.com/AdityaC4">github</a> and <a href="https://www.linkedin.com/in/AdityaC4/">linkedin</a>.
+    you can find me on <a href="https://github.com/AdityaC4">github</a> and
+    <a href="https://www.linkedin.com/in/AdityaC4/">linkedin</a>.
   </p>
   <p>
-    you can also email me at <a href="mailto:adityachaudhari@gmail.com">adityachaudhari@gmail.com</a>.
+    you can also email me at
+    <a href="mailto:adityachaudhari@gmail.com">adityachaudhari@gmail.com</a>.
   </p>
   <br />
-    <div class="current-work">
-      <h2>current work</h2>
-      <p>
-        contributing to LLVM/Clang, focusing on constexpr evaluation and 
-        SIMD optimization. <a href="/blog/">writing about the experience</a>.
-      </p>
-    </div>
-  <br />
-    <div class="research-highlights">
-      <h2>research highlights</h2>
-      <ul>
-        <li>
-          building a <a href="https://github.com/AdityaC4/tubular-upgrade">WebAssembly compiler autotuning pipeline</a> with inlining/unrolling experiments and early speedups on loop-heavy benchmarks.
-        </li>
-        <li>
-          authored the IO500-based analysis of MSU HPCC storage; <a href="https://drive.google.com/file/d/1rbJAyYct-YxjjYaLmvtdXvnf1R_yTLOH/view">technical report</a>
-        </li>
-        <li>
-          evaluated campus RFID access control security (MIFARE Classic and HID/iCLASS); findings documented in <a href="https://drive.google.com/file/d/14b2meTv7yV5Vxdmj9DeGyfoxZK6-NOMI/view">internal reports</a>.
-        </li>
-        <li>
-          upstreamed constexpr support for x86 vector intrinsics to LLVM: <a href="https://github.com/llvm/llvm-project/pull/158778">PR 158778</a> and <a href="https://github.com/llvm/llvm-project/pull/161302">PR 161302</a>.
-        </li>
-      </ul>
-    </div>
+  <div class="current-work">
+    <h2>current work</h2>
+    <p>
+      contributing to LLVM/Clang, focusing on constexpr evaluation and SIMD
+      optimization. <a href="/blog/">writing about the experience</a>.
+    </p>
   </div>
+  <br />
+  <div class="research-highlights">
+    <h2>research highlights</h2>
+    <ul>
+      <li>
+        when does the compiler pass ordering matter? controlled experiments on a
+        WebAssembly compiler reveal small global effects (0.25%) but systematic
+        sensitivity in nested loops (3-5% mean, outliers to 10%), motivating
+        per-program selection. {% set post =
+        get_page(path="blog/25-10-28_pass_order_study.md") %}
+        <a href="{{ post.permalink }}">blog & report</a>
+      </li>
+      <li>
+        upstreamed constexpr support for x86 vector intrinsics to LLVM:
+        <a href="https://github.com/llvm/llvm-project/pull/158778">PR 158778</a>
+        and
+        <a href="https://github.com/llvm/llvm-project/pull/161302">PR 161302</a
+        >.
+      </li>
+      <li>
+        authored the IO500-based GPFS file system analysis of MSU HPCC storage;
+        <a
+          href="https://drive.google.com/file/d/1rbJAyYct-YxjjYaLmvtdXvnf1R_yTLOH/view"
+          >report</a
+        >
+      </li>
+      <li>
+        evaluated campus RFID access control security (MIFARE Classic and
+        HID/iCLASS); findings documented in
+        <a
+          href="https://drive.google.com/file/d/14b2meTv7yV5Vxdmj9DeGyfoxZK6-NOMI/view"
+          >reports</a
+        >.
+      </li>
+    </ul>
+  </div>
+</div>
 {% endblock content %}

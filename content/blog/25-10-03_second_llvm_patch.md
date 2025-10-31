@@ -11,13 +11,13 @@ image = "images/cpp-retro.png"
 image_credit = "https://www.freeiconspng.com/img/28403"
 +++
 
-This post documents LLVM PR [#161302](https://github.com/llvm/llvm-project/pull/161302), where I enabled `constexpr` evaluation for the x86 element extract/insert builtins that back Intel’s MMX, SSE, and AVX2 intrinsics. The work continues the [previous patch](@/blog/22-09-25_first_llvm_patch.md) and completes the basic SIMD element operations needed for compile-time table generation.
+This post documents LLVM PR [#161302](https://github.com/llvm/llvm-project/pull/161302), where I enabled `constexpr` evaluation for the x86 element extract/insert builtins that back Intel’s MMX, SSE, and AVX2 intrinsics. The work continues the [previous patch](@/blog/25-09-22_first_llvm_patch.md) and completes the basic SIMD element operations needed for compile-time table generation.
 
 ## Goals
 
-* Bring parity between runtime and constexpr behavior for `__builtin_ia32_vec_ext_*` and `__builtin_ia32_vec_set_*`.
-* Preserve architectural quirks such as index masking (`index & (NumElts - 1)`) so constexpr execution matches hardware results.
-* Keep the AST evaluator and bytecode interpreter in sync, preventing divergence between the two constant-evaluation engines.
+- Bring parity between runtime and constexpr behavior for `__builtin_ia32_vec_ext_*` and `__builtin_ia32_vec_set_*`.
+- Preserve architectural quirks such as index masking (`index & (NumElts - 1)`) so constexpr execution matches hardware results.
+- Keep the AST evaluator and bytecode interpreter in sync, preventing divergence between the two constant-evaluation engines.
 
 ## Design and Implementation
 
@@ -29,8 +29,8 @@ The targeted builtins span 64-bit MMX vectors through 256-bit AVX2 vectors, cove
 
 Clang’s dual evaluator required two sets of changes:
 
-* `ExprConstant.cpp`: teach `VectorExprEvaluator` to interpret the insert/extract builtins directly from the AST using `APValue` helpers.
-* `InterpBuiltin.cpp`: add bytecode handlers that operate on the constexpr VM’s register model, with explicit type switching for integer and floating-point elements.
+- `ExprConstant.cpp`: teach `VectorExprEvaluator` to interpret the insert/extract builtins directly from the AST using `APValue` helpers.
+- `InterpBuiltin.cpp`: add bytecode handlers that operate on the constexpr VM’s register model, with explicit type switching for integer and floating-point elements.
 
 While prototyping I attempted to share logic via the `TYPE_SWITCH` macro, but the macro expands to pointer types that lack `toAPSInt()`. The final implementation keeps the float case separate and uses `INT_TYPE_SWITCH_NO_BOOL` for the integer matrix. I filed issue [#161685](https://github.com/llvm/llvm-project/issues/161685) to track a cleaner abstraction.
 
@@ -38,9 +38,9 @@ While prototyping I attempted to share logic via the `TYPE_SWITCH` macro, but th
 
 Support landed alongside updates to the existing x86 builtin tests:
 
-* `clang/test/CodeGen/X86/mmx-builtins.c`
-* `clang/test/CodeGen/X86/sse{2,41}-builtins.c`
-* `clang/test/CodeGen/X86/avx2-builtins.c`
+- `clang/test/CodeGen/X86/mmx-builtins.c`
+- `clang/test/CodeGen/X86/sse{2,41}-builtins.c`
+- `clang/test/CodeGen/X86/avx2-builtins.c`
 
 Each file now exercises the relevant extract/set intrinsics under `TEST_CONSTEXPR`, covering lane masking, type conversions, and boundary conditions. Example:
 

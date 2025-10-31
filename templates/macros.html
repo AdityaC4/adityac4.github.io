@@ -1,0 +1,9 @@
+{# Reusable template macros #} {% macro post_link(path, text, attrs="") %} {#
+Resolve the page and render a safe link; attrs is an optional string of HTML
+attributes #} {% set p = get_page(path=path) %} {% if p %} {% if attrs %}
+<a href="{{ p.permalink }}" {{ attrs | safe }}>{{ text }}</a>
+{% else %}
+<a href="{{ p.permalink }}">{{ text }}</a>
+{% endif %} {% else %} {# Print text and include a small HTML comment for
+debugging when missing #}
+<!-- missing post: {{ path }} -->{{ text }} {% endif %} {% endmacro %}
