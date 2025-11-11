@@ -12,21 +12,21 @@
     <link rel="stylesheet" href="{{ get_url(path='style.css') }}" />
     <script>
       // Make all external links open in new tab
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener("DOMContentLoaded", function () {
         const links = document.querySelectorAll('a[href^="http"]');
         const currentDomain = window.location.hostname;
-        
-        links.forEach(link => {
+
+        links.forEach((link) => {
           try {
             const linkUrl = new URL(link.href);
             // Only open external links in new tab, not internal navigation
             if (linkUrl.hostname !== currentDomain) {
-              link.setAttribute('target', '_blank');
-              link.setAttribute('rel', 'noopener noreferrer');
+              link.setAttribute("target", "_blank");
+              link.setAttribute("rel", "noopener noreferrer");
             }
           } catch (e) {
             // If URL parsing fails, skip this link
-            console.warn('Could not parse URL:', link.href);
+            console.warn("Could not parse URL:", link.href);
           }
         });
       });
@@ -39,7 +39,9 @@
         <!-- Navigation -->
         <nav class="nav">
           <div class="nav-container">
-            <a href="{{ get_url(path='/') }}" class="nav-brand">aditya chaudhari</a>
+            <a href="{{ get_url(path='/') }}" class="nav-brand"
+              >aditya chaudhari</a
+            >
             <ul class="nav-links">
               <li>
                 <a
@@ -50,8 +52,10 @@
               </li>
               <li>
                 <a
-                  href="/cv/"
+                  href="/cv/Aditya_Chaudhari_CV.pdf"
                   class="nav-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   >/cv</a
                 >
               </li>
@@ -72,7 +76,7 @@
       </div>
     </section>
     <script type="module">
-      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
       mermaid.initialize({ startOnLoad: true });
     </script>
   </body>
