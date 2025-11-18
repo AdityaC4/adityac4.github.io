@@ -13,7 +13,7 @@ image_credit = "Aditya Prashant Chaudhari"
 
 # Designing and Executing a Pass-Order Study in Tubular
 
-Technical report: [link](https://drive.google.com/file/d/1l2euVHNgPHo4V_RDMbIrIy_qi7EYpVuD/view?usp=sharing)
+Technical report: [link](https://adityac4.github.io/pass_order_study.pdf)
 
 This post documents the research process behind my recent exploration of optimization pass ordering in Tubular, a
 small compiler that emits WebAssembly Text (WAT), I originally built for my class CSE 450, but kept developing it-adding optimization passes, configurable pass ordering, and the data pipelines described here. The accompanying report contains all tables and quantitative results; here I focus on the methodology—how the compiler and experiments were designed, how the data pipeline evolved, and what lessons emerged about making self-driven research reproducible.
