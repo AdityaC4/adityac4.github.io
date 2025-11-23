@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>aditya chaudhari</title>
+    <link
+      rel="icon"
+      type="image/jpg"
+      href="https://adityac4.github.io/images/face.jpg"
+    />
+    <link rel="stylesheet" href="https://adityac4.github.io/style.css" />
+    <script>
+      // Make all external links open in new tab
+      document.addEventListener("DOMContentLoaded", function () {
+        const links = document.querySelectorAll('a[href^="http"]');
+        const currentDomain = window.location.hostname;
+
+        links.forEach((link) => {
+          try {
+            const linkUrl = new URL(link.href);
+            // Only open external links in new tab, not internal navigation
+            if (linkUrl.hostname !== currentDomain) {
+              link.setAttribute("target", "_blank");
+              link.setAttribute("rel", "noopener noreferrer");
+            }
+          } catch (e) {
+            // If URL parsing fails, skip this link
+            console.warn("Could not parse URL:", link.href);
+          }
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <section class="section">
+      <div class="container">
+        <!-- Navigation -->
+        <nav class="nav">
+          <div class="nav-container">
+            <a href="https://adityac4.github.io" class="nav-brand"
+              >aditya chaudhari</a
+            >
+            <ul class="nav-links">
+              <li>
+                <a
+                  href="https://adityac4.github.io/blog/"
+                  class="nav-link"
+                  >/posts</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/cv/Aditya_Chaudhari_CV.pdf"
+                  class="nav-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >/cv</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://adityac4.github.io/tags/"
+                  class="nav-link"
+                  >/tags</a
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div class="align-container">
+          <!-- Main content -->
+          
+<div class="about-section">
+  <h2>about me.</h2>
+  <p>I'm Aditya. I love computers and philosophy.</p>
+  <p>I study compilers, low-level systems, and performance optimization.</p>
+  <p>Currently learning my way through LLVM and related chaos.</p>
+  <p>I plan to write things down when I finally start to make sense.</p>
+  <br />
+  <p>
+    You can find me on
+    <a href="https://github.com/AdityaC4">github.com/AdityaC4</a> and
+    <a href="https://www.linkedin.com/in/AdityaC4/">in/AdityaC4</a>.
+  </p>
+  <p>
+    You can also email me at
+    <a href="mailto:adityachaudhari@gmail.com">adityachaudhari@gmail.com</a>.
+  </p>
+  <br />
+  <div class="current-work">
+    <h2>current work.</h2>
+    <p>
+      contributing to LLVM/Clang, focusing on constexpr evaluation and SIMD
+      optimization. <a href="/blog/">writing about the experience</a>.
+    </p>
+  </div>
+  <br />
+  <div class="research-highlights">
+    <h2>research highlights.</h2>
+    <ul>
+      <li>
+        when does the compiler pass ordering matter? controlled experiments on a
+        WebAssembly compiler reveal small global effects (0.25%) but systematic
+        sensitivity in nested loops (3-5% mean, outliers to 10%), motivating
+        per-program selection. 
+        <a href="https:&#x2F;&#x2F;adityac4.github.io&#x2F;blog&#x2F;25-10-28-pass-order-study&#x2F;">blog & report</a>
+      </li>
+      <li>
+        upstreamed constexpr support for x86 vector intrinsics to LLVM:
+        <a href="https://github.com/llvm/llvm-project/pull/158778">PR 158778</a>
+        and
+        <a href="https://github.com/llvm/llvm-project/pull/161302">PR 161302</a
+        >.
+      </li>
+      <li>
+        authored the IO500-based GPFS file system analysis of MSU HPCC storage;
+        <a
+          href="https://drive.google.com/file/d/1rbJAyYct-YxjjYaLmvtdXvnf1R_yTLOH/view"
+          >report</a
+        >
+      </li>
+      <li>
+        evaluated campus RFID access control security (MIFARE Classic and
+        HID/iCLASS); findings documented in
+        <a
+          href="https://drive.google.com/file/d/14b2meTv7yV5Vxdmj9DeGyfoxZK6-NOMI/view"
+          >reports</a
+        >.
+      </li>
+    </ul>
+  </div>
+</div>
+
+        </div>
+      </div>
+    </section>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+  </body>
+</html>
