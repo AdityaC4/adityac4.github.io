@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - constexpr</title>
+    <link rel="self" type="application/atom+xml" href="https://adityac4.github.io/tags/constexpr/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://adityac4.github.io/"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2025-10-03T00:00:00+00:00</updated>
+    <id>https://adityac4.github.io/tags/constexpr/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Constexpr X86 Vector Element Operations in Clang</title>
+        <published>2025-10-03T00:00:00+00:00</published>
+        <updated>2025-10-03T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://adityac4.github.io/blog/25-10-03-second-llvm-patch/"/>
+        <id>https://adityac4.github.io/blog/25-10-03-second-llvm-patch/</id>
+        
+        <content type="html" xml:base="https://adityac4.github.io/blog/25-10-03-second-llvm-patch/">&lt;p&gt;This post documents LLVM PR &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;llvm&#x2F;llvm-project&#x2F;pull&#x2F;161302&quot;&gt;#161302&lt;&#x2F;a&gt;, where I enabled &lt;code&gt;constexpr&lt;&#x2F;code&gt; evaluation for the x86 element extract&#x2F;insert builtins that back Intel’s MMX, SSE, and AVX2 intrinsics. The work continues the &lt;a href=&quot;https:&#x2F;&#x2F;adityac4.github.io&#x2F;blog&#x2F;25-09-22-first-llvm-patch&#x2F;&quot;&gt;previous patch&lt;&#x2F;a&gt; and completes the basic SIMD element operations needed for compile-time table generation.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;goals&quot;&gt;Goals&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Bring parity between runtime and constexpr behavior for &lt;code&gt;__builtin_ia32_vec_ext_*&lt;&#x2F;code&gt; and &lt;code&gt;__builtin_ia32_vec_set_*&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;Preserve architectural quirks such as index masking (&lt;code&gt;index &amp;amp; (NumElts - 1)&lt;&#x2F;code&gt;) so constexpr execution matches hardware results.&lt;&#x2F;li&gt;
+&lt;li&gt;Keep the AST evaluator and bytecode interpreter in sync, preventing divergence between the two constant-evaluation engines.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;design-and-implementation&quot;&gt;Design and Implementation&lt;&#x2F;h2&gt;
+&lt;p&gt;The targeted builtins span 64-bit MMX vectors through 256-bit AVX2 vectors, covering signed&#x2F;unsigned integers and floats. Each builtin follows the same pattern:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Normalize operands (vector value, element value, immediate index).&lt;&#x2F;li&gt;
+&lt;li&gt;Mask the index to the vector width.&lt;&#x2F;li&gt;
+&lt;li&gt;Either read or write the lane and return a new &lt;code&gt;APValue&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;Clang’s dual evaluator required two sets of changes:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ExprConstant.cpp&lt;&#x2F;code&gt;: teach &lt;code&gt;VectorExprEvaluator&lt;&#x2F;code&gt; to interpret the insert&#x2F;extract builtins directly from the AST using &lt;code&gt;APValue&lt;&#x2F;code&gt; helpers.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;InterpBuiltin.cpp&lt;&#x2F;code&gt;: add bytecode handlers that operate on the constexpr VM’s register model, with explicit type switching for integer and floating-point elements.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;While prototyping I attempted to share logic via the &lt;code&gt;TYPE_SWITCH&lt;&#x2F;code&gt; macro, but the macro expands to pointer types that lack &lt;code&gt;toAPSInt()&lt;&#x2F;code&gt;. The final implementation keeps the float case separate and uses &lt;code&gt;INT_TYPE_SWITCH_NO_BOOL&lt;&#x2F;code&gt; for the integer matrix. I filed issue &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;llvm&#x2F;llvm-project&#x2F;issues&#x2F;161685&quot;&gt;#161685&lt;&#x2F;a&gt; to track a cleaner abstraction.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;testing&quot;&gt;Testing&lt;&#x2F;h2&gt;
+&lt;p&gt;Support landed alongside updates to the existing x86 builtin tests:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;clang&#x2F;test&#x2F;CodeGen&#x2F;X86&#x2F;mmx-builtins.c&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;clang&#x2F;test&#x2F;CodeGen&#x2F;X86&#x2F;sse{2,41}-builtins.c&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;clang&#x2F;test&#x2F;CodeGen&#x2F;X86&#x2F;avx2-builtins.c&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Each file now exercises the relevant extract&#x2F;set intrinsics under &lt;code&gt;TEST_CONSTEXPR&lt;&#x2F;code&gt;, covering lane masking, type conversions, and boundary conditions. Example:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#f9f9f9;color:#111111;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#c82728;&quot;&gt;TEST_CONSTEXPR&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c82728;&quot;&gt;_mm_extract_epi16&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;(vec16i, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#3e999f;&quot;&gt;==&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt; vec16i[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;5 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#3e999f;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;0x3&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;])&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c82728;&quot;&gt;TEST_CONSTEXPR&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c82728;&quot;&gt;_mm256_insert_epi32&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;(vec8i, value, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;18&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#3e999f;&quot;&gt;==
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;               &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c82728;&quot;&gt;replace_lane&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;(vec8i, value, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;18 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#3e999f;&quot;&gt;&amp;amp; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;0x7&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;))&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The tests ensure both evaluators agree and that regressions are caught by the standard Clang test suite.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;outcome&quot;&gt;Outcome&lt;&#x2F;h2&gt;
+&lt;p&gt;The patch resolves issue &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;llvm&#x2F;llvm-project&#x2F;issues&#x2F;159753&quot;&gt;#159753&lt;&#x2F;a&gt; and unlocks constexpr usage for the remaining x86 element operations. Together with PR #158778, users can now construct and deconstruct SIMD data entirely at compile time, making it easier to build lookup tables and perform metaprogramming in header-only libraries.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>My First LLVM Patch: AVX&#x2F;AVX512 Subvector Insert Intrinsics in `constexpr`</title>
+        <published>2025-09-22T00:00:00+00:00</published>
+        <updated>2025-09-22T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://adityac4.github.io/blog/25-09-22-first-llvm-patch/"/>
+        <id>https://adityac4.github.io/blog/25-09-22-first-llvm-patch/</id>
+        
+        <content type="html" xml:base="https://adityac4.github.io/blog/25-09-22-first-llvm-patch/">&lt;p&gt;In LLVM PR &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;llvm&#x2F;llvm-project&#x2F;pull&#x2F;158778&quot;&gt;#158778&lt;&#x2F;a&gt; I enabled &lt;code&gt;constexpr&lt;&#x2F;code&gt; support for AVX and AVX512 subvector insert intrinsics, allowing code that uses helpers such as &lt;code&gt;_mm256_insertf128_ps&lt;&#x2F;code&gt; to fold at compile time. The change removes a long-standing gap between the runtime behavior of these intrinsics and the guarantees developers expect inside &lt;code&gt;constexpr&lt;&#x2F;code&gt; functions.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Extended both of Clang’s constant-evaluation engines (&lt;code&gt;ExprConstant.cpp&lt;&#x2F;code&gt; and &lt;code&gt;InterpBuiltin.cpp&lt;&#x2F;code&gt;) so they understand the x86 insert builtins.&lt;&#x2F;li&gt;
+&lt;li&gt;Added validation around vector sizes, subvector widths, and insertion offsets to match hardware semantics.&lt;&#x2F;li&gt;
+&lt;li&gt;Landed over 40 new &lt;code&gt;TEST_CONSTEXPR&lt;&#x2F;code&gt; cases in the &lt;code&gt;clang&#x2F;test&#x2F;CodeGen&#x2F;X86&lt;&#x2F;code&gt; suite to lock in support across AVX and AVX512 variants.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;implementation-notes&quot;&gt;Implementation Notes&lt;&#x2F;h2&gt;
+&lt;p&gt;Constant evaluation in Clang runs through two independent paths: AST evaluation during semantic analysis and the bytecode interpreter used by the experimental constexpr VM. Each path needed the same primitive:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Fetch the base vector and the subvector operands.&lt;&#x2F;li&gt;
+&lt;li&gt;Verify element counts and derive the target lane from the immediate operand.&lt;&#x2F;li&gt;
+&lt;li&gt;Copy the subvector elements into the base vector while preserving &lt;code&gt;APValue&lt;&#x2F;code&gt; metadata.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;The AST path lives in &lt;code&gt;ExprConstant.cpp&lt;&#x2F;code&gt; and manipulates &lt;code&gt;APValue&lt;&#x2F;code&gt; directly, while the interpreter path adds bytecode handlers in &lt;code&gt;InterpBuiltin.cpp&lt;&#x2F;code&gt;. Keeping the logic in sync required building small helpers shared across both implementations.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;builtins-and-headers&quot;&gt;Builtins and Headers&lt;&#x2F;h2&gt;
+&lt;p&gt;The Clang frontend maps intrinsics through &lt;code&gt;BuiltinsX86.td&lt;&#x2F;code&gt; into header wrappers in &lt;code&gt;clang&#x2F;include&#x2F;clang&#x2F;Headers&lt;&#x2F;code&gt;. Once the constant evaluator gained support for the builtins listed there, existing user code (and the standard Intel headers) immediately benefited without further changes. This also meant no additional masking logic was necessary: the headers expand mask variations into separate builtins, so the evaluator only needs to honor the immediate lane argument.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;testing&quot;&gt;Testing&lt;&#x2F;h2&gt;
+&lt;p&gt;Reviewers asked for the new behavior to be exercised in the same files that cover the rest of the x86 builtin matrix. I replaced an ad-hoc test with additions to &lt;code&gt;clang&#x2F;test&#x2F;CodeGen&#x2F;X86&#x2F;avx{,2}-builtins.cpp&lt;&#x2F;code&gt; and related files, all using &lt;code&gt;TEST_CONSTEXPR&lt;&#x2F;code&gt; to guarantee compile-time execution. A representative case:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#f9f9f9;color:#111111;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;color:#c82728;&quot;&gt;TEST_CONSTEXPR&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#c82728;&quot;&gt;match_v16si&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;(
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#c82728;&quot;&gt;_mm512_mask_inserti32x4&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;(base, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;0x00F0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;, base, sub, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;),
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;3&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;4&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;20&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;30&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;40&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;50&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;11&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;12&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;13&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;14&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;15&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;16&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f07219;&quot;&gt;17&lt;&#x2F;span&gt;&lt;span style=&quot;color:#4271ae;&quot;&gt;))&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;These tests cover lane boundaries, mask interactions, and error paths to ensure both evaluators agree on the result.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;result&quot;&gt;Result&lt;&#x2F;h2&gt;
+&lt;p&gt;After two review rounds focused on naming consistency and LLVM formatting rules, the change was approved and merged. Issue &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;llvm&#x2F;llvm-project&#x2F;issues&#x2F;157709&quot;&gt;#157709&lt;&#x2F;a&gt; is now closed, and constexpr users can rely on these intrinsics in table-generation and other compile-time SIMD workflows.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

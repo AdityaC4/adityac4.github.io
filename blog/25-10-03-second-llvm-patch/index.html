@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>aditya chaudhari</title>
+    <link
+      rel="icon"
+      type="image/jpg"
+      href="https://adityac4.github.io/images/face.jpg"
+    />
+    <link rel="stylesheet" href="https://adityac4.github.io/style.css" />
+    <script>
+      // Make all external links open in new tab
+      document.addEventListener("DOMContentLoaded", function () {
+        const links = document.querySelectorAll('a[href^="http"]');
+        const currentDomain = window.location.hostname;
+
+        links.forEach((link) => {
+          try {
+            const linkUrl = new URL(link.href);
+            // Only open external links in new tab, not internal navigation
+            if (linkUrl.hostname !== currentDomain) {
+              link.setAttribute("target", "_blank");
+              link.setAttribute("rel", "noopener noreferrer");
+            }
+          } catch (e) {
+            // If URL parsing fails, skip this link
+            console.warn("Could not parse URL:", link.href);
+          }
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <section class="section">
+      <div class="container">
+        <!-- Navigation -->
+        <nav class="nav">
+          <div class="nav-container">
+            <a href="https://adityac4.github.io" class="nav-brand"
+              >aditya chaudhari</a
+            >
+            <ul class="nav-links">
+              <li>
+                <a
+                  href="https://adityac4.github.io/blog/"
+                  class="nav-link"
+                  >/posts</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/cv/Aditya_Chaudhari_CV.pdf"
+                  class="nav-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >/cv</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://adityac4.github.io/tags/"
+                  class="nav-link"
+                  >/tags</a
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div class="align-container">
+          <!-- Main content -->
+          
+<article class="post">
+  <header class="post-header">
+    <div class="post-header-content">
+      <div class="post-title-section">
+        <h1 class="title">Constexpr X86 Vector Element Operations in Clang</h1>
+        
+        <p class="post-description">Extending constexpr support for element extract&#x2F;insert intrinsics (LLVM PR #161302)</p>
+        
+      </div>
+      <div class="post-meta">
+        <div class="post-date">
+          <strong>2025-10-03</strong>
+        </div>
+        
+        <div class="post-tags">
+          
+          <a href="https://adityac4.github.io/tags/llvm/" class="tag"
+            >LLVM</a
+          >
+          
+          <a href="https://adityac4.github.io/tags/constexpr/" class="tag"
+            >constexpr</a
+          >
+          
+          <a href="https://adityac4.github.io/tags/clang/" class="tag"
+            >clang</a
+          >
+          
+        </div>
+        
+      </div>
+    </div>
+  </header>
+
+  <div class="post-content"><p>This post documents LLVM PR <a href="https://github.com/llvm/llvm-project/pull/161302">#161302</a>, where I enabled <code>constexpr</code> evaluation for the x86 element extract/insert builtins that back Intel’s MMX, SSE, and AVX2 intrinsics. The work continues the <a href="https://adityac4.github.io/blog/25-09-22-first-llvm-patch/">previous patch</a> and completes the basic SIMD element operations needed for compile-time table generation.</p>
+<h2 id="goals">Goals</h2>
+<ul>
+<li>Bring parity between runtime and constexpr behavior for <code>__builtin_ia32_vec_ext_*</code> and <code>__builtin_ia32_vec_set_*</code>.</li>
+<li>Preserve architectural quirks such as index masking (<code>index &amp; (NumElts - 1)</code>) so constexpr execution matches hardware results.</li>
+<li>Keep the AST evaluator and bytecode interpreter in sync, preventing divergence between the two constant-evaluation engines.</li>
+</ul>
+<h2 id="design-and-implementation">Design and Implementation</h2>
+<p>The targeted builtins span 64-bit MMX vectors through 256-bit AVX2 vectors, covering signed/unsigned integers and floats. Each builtin follows the same pattern:</p>
+<ol>
+<li>Normalize operands (vector value, element value, immediate index).</li>
+<li>Mask the index to the vector width.</li>
+<li>Either read or write the lane and return a new <code>APValue</code>.</li>
+</ol>
+<p>Clang’s dual evaluator required two sets of changes:</p>
+<ul>
+<li><code>ExprConstant.cpp</code>: teach <code>VectorExprEvaluator</code> to interpret the insert/extract builtins directly from the AST using <code>APValue</code> helpers.</li>
+<li><code>InterpBuiltin.cpp</code>: add bytecode handlers that operate on the constexpr VM’s register model, with explicit type switching for integer and floating-point elements.</li>
+</ul>
+<p>While prototyping I attempted to share logic via the <code>TYPE_SWITCH</code> macro, but the macro expands to pointer types that lack <code>toAPSInt()</code>. The final implementation keeps the float case separate and uses <code>INT_TYPE_SWITCH_NO_BOOL</code> for the integer matrix. I filed issue <a href="https://github.com/llvm/llvm-project/issues/161685">#161685</a> to track a cleaner abstraction.</p>
+<h2 id="testing">Testing</h2>
+<p>Support landed alongside updates to the existing x86 builtin tests:</p>
+<ul>
+<li><code>clang/test/CodeGen/X86/mmx-builtins.c</code></li>
+<li><code>clang/test/CodeGen/X86/sse{2,41}-builtins.c</code></li>
+<li><code>clang/test/CodeGen/X86/avx2-builtins.c</code></li>
+</ul>
+<p>Each file now exercises the relevant extract/set intrinsics under <code>TEST_CONSTEXPR</code>, covering lane masking, type conversions, and boundary conditions. Example:</p>
+<pre data-lang="c" style="background-color:#f9f9f9;color:#111111;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#c82728;">TEST_CONSTEXPR</span><span style="color:#4271ae;">(</span><span style="color:#c82728;">_mm_extract_epi16</span><span style="color:#4271ae;">(vec16i, </span><span style="color:#f07219;">5</span><span style="color:#4271ae;">) </span><span style="color:#3e999f;">==</span><span style="color:#4271ae;"> vec16i[</span><span style="color:#f07219;">5 </span><span style="color:#3e999f;">&amp; </span><span style="color:#f07219;">0x3</span><span style="color:#4271ae;">])</span><span>;
+</span><span style="color:#c82728;">TEST_CONSTEXPR</span><span style="color:#4271ae;">(</span><span style="color:#c82728;">_mm256_insert_epi32</span><span style="color:#4271ae;">(vec8i, value, </span><span style="color:#f07219;">18</span><span style="color:#4271ae;">) </span><span style="color:#3e999f;">==
+</span><span style="color:#4271ae;">               </span><span style="color:#c82728;">replace_lane</span><span style="color:#4271ae;">(vec8i, value, </span><span style="color:#f07219;">18 </span><span style="color:#3e999f;">&amp; </span><span style="color:#f07219;">0x7</span><span style="color:#4271ae;">))</span><span>;
+</span></code></pre>
+<p>The tests ensure both evaluators agree and that regressions are caught by the standard Clang test suite.</p>
+<h2 id="outcome">Outcome</h2>
+<p>The patch resolves issue <a href="https://github.com/llvm/llvm-project/issues/159753">#159753</a> and unlocks constexpr usage for the remaining x86 element operations. Together with PR #158778, users can now construct and deconstruct SIMD data entirely at compile time, making it easier to build lookup tables and perform metaprogramming in header-only libraries.</p>
+</div>
+</article>
+
+        </div>
+      </div>
+    </section>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+  </body>
+</html>
