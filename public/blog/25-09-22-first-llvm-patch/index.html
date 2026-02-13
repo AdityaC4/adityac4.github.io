@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>aditya chaudhari</title>
+    <link
+      rel="icon"
+      type="image/jpg"
+      href="https://adityac4.github.io/images/face.jpg"
+    />
+    <link rel="stylesheet" href="https://adityac4.github.io/style.css" />
+    <script>
+      // Make all external links open in new tab
+      document.addEventListener("DOMContentLoaded", function () {
+        const links = document.querySelectorAll('a[href^="http"]');
+        const currentDomain = window.location.hostname;
+
+        links.forEach((link) => {
+          try {
+            const linkUrl = new URL(link.href);
+            // Only open external links in new tab, not internal navigation
+            if (linkUrl.hostname !== currentDomain) {
+              link.setAttribute("target", "_blank");
+              link.setAttribute("rel", "noopener noreferrer");
+            }
+          } catch (e) {
+            // If URL parsing fails, skip this link
+            console.warn("Could not parse URL:", link.href);
+          }
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <section class="section">
+      <div class="container">
+        <!-- Navigation -->
+        <nav class="nav">
+          <div class="nav-container">
+            <a href="https://adityac4.github.io" class="nav-brand"
+              >aditya chaudhari</a
+            >
+            <ul class="nav-links">
+              <li>
+                <a
+                  href="https://adityac4.github.io/blog/"
+                  class="nav-link"
+                  >/posts</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/cv/Aditya_Chaudhari_CV.pdf"
+                  class="nav-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >/cv</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://adityac4.github.io/tags/"
+                  class="nav-link"
+                  >/tags</a
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div class="align-container">
+          <!-- Main content -->
+          
+<article class="post">
+  <header class="post-header">
+    <div class="post-header-content">
+      <div class="post-title-section">
+        <h1 class="title">My First LLVM Patch: AVX/AVX512 Subvector Insert Intrinsics in <code>constexpr</code></h1>
+        
+        <p class="post-description">Documenting the work behind LLVM PR #158778</p>
+        
+      </div>
+      <div class="post-meta">
+        <div class="post-date">
+          <strong>2025-09-22</strong>
+        </div>
+        
+        <div class="post-tags">
+          
+          <a href="https://adityac4.github.io/tags/llvm/" class="tag"
+            >LLVM</a
+          >
+          
+          <a href="https://adityac4.github.io/tags/clang/" class="tag"
+            >clang</a
+          >
+          
+          <a href="https://adityac4.github.io/tags/constexpr/" class="tag"
+            >constexpr</a
+          >
+          
+        </div>
+        
+      </div>
+    </div>
+  </header>
+
+  <div class="post-content"><p>In LLVM PR <a href="https://github.com/llvm/llvm-project/pull/158778">#158778</a> I enabled <code>constexpr</code> support for AVX and AVX512 subvector insert intrinsics, allowing code that uses helpers such as <code>_mm256_insertf128_ps</code> to fold at compile time. The change removes a long-standing gap between the runtime behavior of these intrinsics and the guarantees developers expect inside <code>constexpr</code> functions.</p>
+<h2 id="summary">Summary</h2>
+<ul>
+<li>Extended both of Clang’s constant-evaluation engines (<code>ExprConstant.cpp</code> and <code>InterpBuiltin.cpp</code>) so they understand the x86 insert builtins.</li>
+<li>Added validation around vector sizes, subvector widths, and insertion offsets to match hardware semantics.</li>
+<li>Landed over 40 new <code>TEST_CONSTEXPR</code> cases in the <code>clang/test/CodeGen/X86</code> suite to lock in support across AVX and AVX512 variants.</li>
+</ul>
+<h2 id="implementation-notes">Implementation Notes</h2>
+<p>Constant evaluation in Clang runs through two independent paths: AST evaluation during semantic analysis and the bytecode interpreter used by the experimental constexpr VM. Each path needed the same primitive:</p>
+<ol>
+<li>Fetch the base vector and the subvector operands.</li>
+<li>Verify element counts and derive the target lane from the immediate operand.</li>
+<li>Copy the subvector elements into the base vector while preserving <code>APValue</code> metadata.</li>
+</ol>
+<p>The AST path lives in <code>ExprConstant.cpp</code> and manipulates <code>APValue</code> directly, while the interpreter path adds bytecode handlers in <code>InterpBuiltin.cpp</code>. Keeping the logic in sync required building small helpers shared across both implementations.</p>
+<h2 id="builtins-and-headers">Builtins and Headers</h2>
+<p>The Clang frontend maps intrinsics through <code>BuiltinsX86.td</code> into header wrappers in <code>clang/include/clang/Headers</code>. Once the constant evaluator gained support for the builtins listed there, existing user code (and the standard Intel headers) immediately benefited without further changes. This also meant no additional masking logic was necessary: the headers expand mask variations into separate builtins, so the evaluator only needs to honor the immediate lane argument.</p>
+<h2 id="testing">Testing</h2>
+<p>Reviewers asked for the new behavior to be exercised in the same files that cover the rest of the x86 builtin matrix. I replaced an ad-hoc test with additions to <code>clang/test/CodeGen/X86/avx{,2}-builtins.cpp</code> and related files, all using <code>TEST_CONSTEXPR</code> to guarantee compile-time execution. A representative case:</p>
+<pre data-lang="c" style="background-color:#f9f9f9;color:#111111;" class="language-c "><code class="language-c" data-lang="c"><span style="color:#c82728;">TEST_CONSTEXPR</span><span style="color:#4271ae;">(</span><span style="color:#c82728;">match_v16si</span><span style="color:#4271ae;">(
+</span><span style="color:#4271ae;">  </span><span style="color:#c82728;">_mm512_mask_inserti32x4</span><span style="color:#4271ae;">(base, </span><span style="color:#f07219;">0x00F0</span><span style="color:#4271ae;">, base, sub, </span><span style="color:#f07219;">1</span><span style="color:#4271ae;">),
+</span><span style="color:#4271ae;">  </span><span style="color:#f07219;">2</span><span style="color:#4271ae;">, </span><span style="color:#f07219;">3</span><span style="color:#4271ae;">, </span><span style="color:#f07219;">4</span><span style="color:#4271ae;">, </span><span style="color:#f07219;">5</span><span style="color:#4271ae;">, </span><span style="color:#f07219;">20</span><span style="color:#4271ae;">, </span><span style="color:#f07219;">30</span><span style="color:#4271ae;">, </span><span style="color:#f07219;">40</span><span style="color:#4271ae;">, </span><span style="color:#f07219;">50</span><span style="color:#4271ae;">, </span><span style="color:#f07219;">10</span><span style="color:#4271ae;">, </span><span style="color:#f07219;">11</span><span style="color:#4271ae;">, </span><span style="color:#f07219;">12</span><span style="color:#4271ae;">, </span><span style="color:#f07219;">13</span><span style="color:#4271ae;">, </span><span style="color:#f07219;">14</span><span style="color:#4271ae;">, </span><span style="color:#f07219;">15</span><span style="color:#4271ae;">, </span><span style="color:#f07219;">16</span><span style="color:#4271ae;">, </span><span style="color:#f07219;">17</span><span style="color:#4271ae;">))</span><span>;
+</span></code></pre>
+<p>These tests cover lane boundaries, mask interactions, and error paths to ensure both evaluators agree on the result.</p>
+<h2 id="result">Result</h2>
+<p>After two review rounds focused on naming consistency and LLVM formatting rules, the change was approved and merged. Issue <a href="https://github.com/llvm/llvm-project/issues/157709">#157709</a> is now closed, and constexpr users can rely on these intrinsics in table-generation and other compile-time SIMD workflows.</p>
+</div>
+</article>
+
+        </div>
+      </div>
+    </section>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+  </body>
+</html>

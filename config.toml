@@ -10,7 +10,9 @@ taxonomies = [
     {name = "tags", feed = true},
 ]
 
-[markdown.highlighting]
+[markdown]
+highlight_code = true
+highlight_theme = "demain"
 
 [extra]
 # Put all your custom variables here
