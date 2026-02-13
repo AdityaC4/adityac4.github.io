@@ -6,7 +6,6 @@ compile_sass = false
 
 # Whether to build a search index to be used later on by a JavaScript library
 build_search_index = false
-
 taxonomies = [
     {name = "tags", feed = true},
 ]
@@ -14,7 +13,7 @@ taxonomies = [
 [markdown]
 # Whether to do syntax highlighting
 # Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
-highlight_code = true
+highlighting = true
 highlight_theme = "demain"
 
 [extra]
