@@ -1,0 +1,185 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  color: #0c027b;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+  line-height: 1.32;
+}
+
+a {
+  color: #0c027b;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+a:visited {
+  color: #781c78;
+}
+
+a:hover,
+a:focus {
+  color: #102b64;
+}
+
+hr {
+  border: 0;
+  height: 2px;
+  background: linear-gradient(to bottom, #2f2f2f 0, #2f2f2f 1px, #b8b8b8 1px, #b8b8b8 2px);
+  margin: 1rem 0;
+}
+
+.page-shell {
+  width: min(840px, calc(100% - 1rem));
+  margin: 0 auto;
+  padding: 0.4rem 0 1.5rem;
+}
+
+main {
+  padding-top: 0.35rem;
+}
+
+.site-header {
+  text-align: center;
+}
+
+.site-header h1 {
+  margin: 0;
+  color: #0c027b;
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  line-height: 1.02;
+}
+
+.name-word {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.name-word + .name-word {
+  margin-left: 0.16em;
+}
+
+.name-initial {
+  font-size: 1.75em;
+  line-height: 1;
+}
+
+.name-rest {
+  font-size: 1em;
+  letter-spacing: 0.01em;
+}
+
+.site-subtitle {
+  margin: 0.18rem 0 0;
+  font-size: 0.98rem;
+}
+
+.intro-copy p,
+section p,
+section li,
+.site-footer p {
+  margin: 0.35rem 0;
+}
+
+.profile-links {
+  display: block;
+  line-height: 1.6;
+}
+
+.profile-links span {
+  display: inline-block;
+  margin-right: 0.3rem;
+}
+
+.office-line {
+  font-size: 0.92rem;
+  margin-top: 0.55rem;
+}
+
+.detail-list {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.detail-list li + li {
+  margin-top: 0.5rem;
+}
+
+.news-date {
+  display: inline-block;
+  min-width: 5.8rem;
+  font-weight: bold;
+}
+
+.plain-details {
+  padding: 0;
+}
+
+.plain-details summary {
+  cursor: pointer;
+  color: #0c027b;
+  font-weight: bold;
+  font-size: 1.05rem;
+  list-style: none;
+}
+
+.plain-details summary + * {
+  margin-top: 0.75rem;
+}
+
+.plain-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.content-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.compact-details summary {
+  display: inline;
+}
+
+.compact-details summary::before {
+  content: "\25B8  ";
+}
+
+.compact-details[open] summary::before {
+  content: "\25BE  ";
+}
+
+.compact-details summary::after {
+  content: ".";
+}
+
+.compact-details > :not(summary) {
+  margin-left: 1.1rem;
+}
+
+.site-footer {
+  font-size: 0.9rem;
+}
+
+.footer-quote {
+  font-style: italic;
+}
+
+@media (max-width: 720px) {
+  body {
+    font-size: 16px;
+  }
+
+  .page-shell {
+    width: min(100% - 0.75rem, 840px);
+    padding-top: 0.35rem;
+  }
+
+  .news-date {
+    min-width: 0;
+    margin-right: 0.45rem;
+  }
+}

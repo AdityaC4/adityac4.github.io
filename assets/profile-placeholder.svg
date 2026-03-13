@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" role="img" aria-labelledby="title desc">
+  <title id="title">Profile photo placeholder</title>
+  <desc id="desc">A simple bordered portrait placeholder with the initials AC.</desc>
+  <rect width="300" height="400" fill="#f7f7f7" />
+  <rect x="8" y="8" width="284" height="384" fill="none" stroke="#8f8f8f" stroke-width="1.5" />
+  <circle cx="150" cy="132" r="54" fill="#d8d8d8" />
+  <path d="M78 282c14-48 58-74 72-74s58 26 72 74" fill="#d8d8d8" />
+  <text x="150" y="352" text-anchor="middle" font-family="Times New Roman, Times, serif" font-size="28" fill="#1d3f8f">
+    A C
+  </text>
+</svg>
