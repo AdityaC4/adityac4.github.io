@@ -27,9 +27,6 @@ a:focus {
 }
 
 hr {
-  border: 0;
-  height: 2px;
-  background: linear-gradient(to bottom, #2f2f2f 0, #2f2f2f 1px, #b8b8b8 1px, #b8b8b8 2px);
   margin: 1rem 0;
 }
 
