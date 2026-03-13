@@ -5,25 +5,25 @@ html {
 body {
   margin: 0;
   background: #ffffff;
-  color: #0c027b;
+  color: #000080;
   font-family: "Times New Roman", Times, serif;
   font-size: 16px;
   line-height: 1.32;
 }
 
 a {
-  color: #0c027b;
+  color: #800080;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
 }
 
 a:visited {
-  color: #781c78;
+  color: #ff0000;
 }
 
 a:hover,
 a:focus {
-  color: #102b64;
+  color: #ff0000;
 }
 
 hr {
@@ -49,7 +49,7 @@ main {
 
 .site-header h1 {
   margin: 0;
-  color: #0c027b;
+  color: #000080;
   font-size: clamp(1.1rem, 2.5vw, 1.5rem);
   line-height: 1.02;
 }
@@ -121,7 +121,7 @@ section li,
 
 .plain-details summary {
   cursor: pointer;
-  color: #0c027b;
+  color: #000080;
   font-weight: bold;
   font-size: 1.05rem;
   list-style: none;
