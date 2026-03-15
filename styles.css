@@ -30,6 +30,10 @@ hr {
   margin: 1rem 0;
 }
 
+.intro-divider {
+  clear: right;
+}
+
 .page-shell {
   width: min(840px, calc(100% - 1rem));
   margin: 0 auto;
@@ -75,6 +79,14 @@ main {
   font-size: 0.98rem;
 }
 
+.intro-photo {
+  float: right;
+  width: 120px;
+  max-width: 32vw;
+  height: auto;
+  margin: 0.05rem 0 0.55rem 0.95rem;
+}
+
 .intro-copy p,
 section p,
 section li,
@@ -83,7 +95,6 @@ section li,
 }
 
 .profile-links {
-  display: block;
   line-height: 1.6;
 }
 
@@ -132,9 +143,8 @@ section li,
   display: none;
 }
 
-.content-list {
-  display: grid;
-  gap: 0.65rem;
+.content-list > * + * {
+  margin-top: 0.65rem;
 }
 
 .compact-details summary {
@@ -166,8 +176,11 @@ section li,
 }
 
 @media (max-width: 720px) {
-  body {
-    font-size: 16px;
+  .intro-photo {
+    float: none;
+    display: block;
+    width: min(120px, 40vw);
+    margin: 0 auto 0.6rem;
   }
 
   .page-shell {

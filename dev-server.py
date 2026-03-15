@@ -11,6 +11,7 @@ import time
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from urllib.parse import urlsplit
 
 
 WATCH_SUFFIXES = {
@@ -25,17 +26,25 @@ WATCH_SUFFIXES = {
     ".webp",
 }
 
+POLL_ENDPOINT = "/__dev_poll"
+
 RELOAD_SNIPPET = """
 <script>
 (() => {
   let version = null;
   async function poll() {
     try {
-      const response = await fetch('/__livereload', { cache: 'no-store' });
+      const response = await fetch('__POLL_ENDPOINT__?_ts=' + Date.now(), { cache: 'no-store' });
       const data = await response.json();
       if (version === null) {
         version = data.version;
       } else if (version !== data.version) {
+        const links = document.querySelectorAll('link[rel="stylesheet"]');
+        for (const link of links) {
+          const url = new URL(link.href, window.location.href);
+          url.searchParams.set('_lr', data.version.slice(0, 8));
+          link.href = url.toString();
+        }
         window.location.reload();
         return;
       }
@@ -48,6 +57,7 @@ RELOAD_SNIPPET = """
 })();
 </script>
 """
+RELOAD_SNIPPET = RELOAD_SNIPPET.replace("__POLL_ENDPOINT__", POLL_ENDPOINT)
 
 
 class ChangeTracker:
@@ -83,7 +93,9 @@ class LiveReloadHandler(SimpleHTTPRequestHandler):
     tracker: ChangeTracker
 
     def do_GET(self) -> None:  # noqa: N802
-      if self.path == "/__livereload":
+      request_path = urlsplit(self.path).path
+
+      if request_path == POLL_ENDPOINT:
         payload = json.dumps({"version": self.tracker.version}).encode("utf-8")
         self.send_response(HTTPStatus.OK)
         self.send_header("Content-Type", "application/json; charset=utf-8")
@@ -93,11 +105,23 @@ class LiveReloadHandler(SimpleHTTPRequestHandler):
         self.wfile.write(payload)
         return
 
-      if self.path.endswith(".html") or self.path in {"/", ""}:
+      if request_path.endswith(".html") or request_path in {"/", ""}:
         self._serve_html()
         return
 
+      # Avoid false 304 responses from second-level mtime comparisons.
+      # Some browsers can then keep stale CSS despite a page reload.
+      if "If-Modified-Since" in self.headers:
+        del self.headers["If-Modified-Since"]
+
       super().do_GET()
+
+    def end_headers(self) -> None:
+      # Keep local dev assets uncached across browsers.
+      self.send_header("Cache-Control", "no-store")
+      self.send_header("Pragma", "no-cache")
+      self.send_header("Expires", "0")
+      super().end_headers()
 
     def _serve_html(self) -> None:
       path = self.translate_path(self.path)
