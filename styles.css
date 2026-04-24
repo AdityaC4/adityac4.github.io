@@ -18,12 +18,12 @@ a {
 }
 
 a:visited {
-  color: #ff0000;
+  color: #b30000;
 }
 
 a:hover,
 a:focus {
-  color: #ff0000;
+  color: #b30000;
 }
 
 hr {
