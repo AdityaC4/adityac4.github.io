@@ -167,6 +167,104 @@ section li,
   margin-left: 1.1rem;
 }
 
+/* Blog */
+.blog-nav {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: bold;
+}
+
+.post-content h1 {
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  line-height: 1.15;
+  margin: 0 0 0.3rem;
+}
+
+.post-content h2 {
+  font-size: 1.18rem;
+  margin: 1.3rem 0 0.4rem;
+}
+
+.post-content h3 {
+  font-size: 1.02rem;
+  margin: 1rem 0 0.3rem;
+}
+
+.post-meta {
+  font-size: 0.9rem;
+  margin: 0 0 0.9rem;
+}
+
+.post-content p,
+.post-content li {
+  margin: 0.5rem 0;
+}
+
+.post-content blockquote {
+  margin: 0.8rem 0;
+  padding-left: 0.9rem;
+  border-left: 3px solid #000080;
+  font-style: italic;
+}
+
+figure.post-hero {
+  margin: 0.3rem 0 1.1rem;
+}
+
+.post-hero img {
+  width: min(100%, 260px);
+  height: auto;
+  display: block;
+}
+
+.post-hero figcaption {
+  font-size: 0.8rem;
+  font-style: italic;
+  margin-top: 0.2rem;
+}
+
+code {
+  font-family: "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.85em;
+}
+
+:not(pre) > code {
+  background: #f0f0f5;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+
+pre {
+  background: #f0f0f5;
+  border: 1px solid #d0d0e0;
+  border-radius: 4px;
+  padding: 0.7rem 0.9rem;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  line-height: 1.42;
+}
+
+pre code {
+  font-size: inherit;
+  background: none;
+  padding: 0;
+}
+
+/* Blog index */
+.post-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.post-list li {
+  margin: 0.7rem 0;
+}
+
+.post-list .post-date {
+  font-size: 0.9rem;
+}
+
 .site-footer {
   font-size: 0.9rem;
 }
