@@ -22,8 +22,21 @@ when something lands on `main`.
 git checkout main
 git pull
 git merge phd-site
+```
+
+The merge stops with **exactly 3 conflicts**, all the same harmless kind
+(`modify/delete` — phd-site deleted old Zola files that main still had). Resolve by
+confirming the deletions, then finish:
+
+```bash
+git rm .github/workflows/main.yml config.toml templates/index.html
+git commit --no-edit
 git push origin main
 ```
+
+Everything else merges automatically. If `git merge` ever reports *different* files or a
+content conflict (`<<<<<<<` markers), stop and ask — that means something changed since
+this was written.
 
 This push triggers the new deploy workflow (`.github/workflows/pages-deploy.yml`).
 
