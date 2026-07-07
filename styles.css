@@ -1,0 +1,293 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  color: #000080;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+  line-height: 1.32;
+}
+
+a {
+  color: #800080;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+a:visited {
+  color: #b30000;
+}
+
+a:hover,
+a:focus {
+  color: #b30000;
+}
+
+hr {
+  margin: 1rem 0;
+}
+
+.intro-divider {
+  clear: right;
+}
+
+.page-shell {
+  width: min(840px, calc(100% - 1rem));
+  margin: 0 auto;
+  padding: 0.4rem 0 1.5rem;
+}
+
+main {
+  padding-top: 0.35rem;
+}
+
+.site-header {
+  text-align: center;
+}
+
+.site-header h1 {
+  margin: 0;
+  color: #000080;
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  line-height: 1.02;
+}
+
+.name-word {
+  display: inline;
+}
+
+.name-word + .name-word {
+  margin-left: 0.16em;
+}
+
+.name-initial {
+  font-size: 1.75em;
+  line-height: 1;
+  display: inline-block;
+}
+
+.name-rest {
+  font-size: 1em;
+  letter-spacing: 0.01em;
+}
+
+.site-subtitle {
+  margin: 0.18rem 0 0;
+  font-size: 0.98rem;
+}
+
+.intro-photo {
+  float: right;
+  width: 120px;
+  max-width: 32vw;
+  height: auto;
+  margin: 0.05rem 0 0.55rem 0.95rem;
+}
+
+.intro-copy p,
+section p,
+section li,
+.site-footer p {
+  margin: 0.35rem 0;
+}
+
+.profile-links {
+  line-height: 1.6;
+}
+
+.profile-links span {
+  display: inline-block;
+  margin-right: 0.3rem;
+}
+
+.office-line {
+  font-size: 0.92rem;
+  margin-top: 0.55rem;
+}
+
+.detail-list {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.detail-list li + li {
+  margin-top: 0.5rem;
+}
+
+.news-date {
+  display: inline-block;
+  min-width: 5.8rem;
+  font-weight: bold;
+}
+
+.plain-details {
+  padding: 0;
+}
+
+.plain-details summary {
+  cursor: pointer;
+  color: #000080;
+  font-weight: bold;
+  font-size: 1.05rem;
+  list-style: none;
+}
+
+.plain-details summary + * {
+  margin-top: 0.75rem;
+}
+
+.plain-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.content-list > * + * {
+  margin-top: 0.65rem;
+}
+
+.compact-details summary {
+  display: inline;
+}
+
+.compact-details summary::before {
+  content: "\25B8  ";
+}
+
+.compact-details[open] summary::before {
+  content: "\25BE  ";
+}
+
+.compact-details summary::after {
+  content: ".";
+}
+
+.compact-details > :not(summary) {
+  margin-left: 1.1rem;
+}
+
+/* Blog */
+.blog-nav {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: bold;
+}
+
+.post-content h1 {
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  line-height: 1.15;
+  margin: 0 0 0.3rem;
+}
+
+.post-content h2 {
+  font-size: 1.18rem;
+  margin: 1.3rem 0 0.4rem;
+}
+
+.post-content h3 {
+  font-size: 1.02rem;
+  margin: 1rem 0 0.3rem;
+}
+
+.post-meta {
+  font-size: 0.9rem;
+  margin: 0 0 0.9rem;
+}
+
+.post-content p,
+.post-content li {
+  margin: 0.5rem 0;
+}
+
+.post-content blockquote {
+  margin: 0.8rem 0;
+  padding-left: 0.9rem;
+  border-left: 3px solid #000080;
+  font-style: italic;
+}
+
+figure.post-hero {
+  margin: 0.3rem 0 1.1rem;
+}
+
+.post-hero img {
+  width: min(100%, 260px);
+  height: auto;
+  display: block;
+}
+
+.post-hero figcaption {
+  font-size: 0.8rem;
+  font-style: italic;
+  margin-top: 0.2rem;
+}
+
+code {
+  font-family: "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.85em;
+}
+
+:not(pre) > code {
+  background: #f0f0f5;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+
+pre {
+  background: #f0f0f5;
+  border: 1px solid #d0d0e0;
+  border-radius: 4px;
+  padding: 0.7rem 0.9rem;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  line-height: 1.42;
+}
+
+pre code {
+  font-size: inherit;
+  background: none;
+  padding: 0;
+}
+
+/* Blog index */
+.post-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.post-list li {
+  margin: 0.7rem 0;
+}
+
+.post-list .post-date {
+  font-size: 0.9rem;
+}
+
+.site-footer {
+  font-size: 0.9rem;
+}
+
+.footer-quote {
+  font-style: italic;
+}
+
+@media (max-width: 720px) {
+  .intro-photo {
+    float: none;
+    display: block;
+    width: min(120px, 40vw);
+    margin: 0 auto 0.6rem;
+  }
+
+  .page-shell {
+    width: min(100% - 0.75rem, 840px);
+    padding-top: 0.35rem;
+  }
+
+  .news-date {
+    min-width: 0;
+    margin-right: 0.45rem;
+  }
+}

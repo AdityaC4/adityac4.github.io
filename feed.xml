@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Aditya Chaudhari — Posts</title>
+  <subtitle>Technical writeups by Aditya Chaudhari.</subtitle>
+  <link href="https://adityac4.github.io/feed.xml" rel="self" />
+  <link href="https://adityac4.github.io/blog/" />
+  <id>https://adityac4.github.io/</id>
+  <updated>2025-10-28T00:00:00Z</updated>
+  <author>
+    <name>Aditya Prashant Chaudhari</name>
+    <uri>https://adityac4.github.io</uri>
+  </author>
+
+  <entry>
+    <title>A Pass-Order Study in Tubular</title>
+    <link href="https://adityac4.github.io/blog/2025-10-28-pass-order-study.html" />
+    <id>https://adityac4.github.io/blog/2025-10-28-pass-order-study.html</id>
+    <published>2025-10-28T00:00:00Z</published>
+    <updated>2025-10-28T00:00:00Z</updated>
+    <summary>Study of pass-order sensitivity in Tubular: experiment design, data pipeline, and key findings.</summary>
+  </entry>
+
+  <entry>
+    <title>Constexpr X86 Vector Element Operations in Clang</title>
+    <link href="https://adityac4.github.io/blog/2025-10-03-constexpr-x86-element-ops.html" />
+    <id>https://adityac4.github.io/blog/2025-10-03-constexpr-x86-element-ops.html</id>
+    <published>2025-10-03T00:00:00Z</published>
+    <updated>2025-10-03T00:00:00Z</updated>
+    <summary>Extending constexpr support for element extract/insert intrinsics (LLVM PR #161302).</summary>
+  </entry>
+
+  <entry>
+    <title>My First LLVM Patch: AVX/AVX512 Subvector Insert Intrinsics in constexpr</title>
+    <link href="https://adityac4.github.io/blog/2025-09-22-first-llvm-patch.html" />
+    <id>https://adityac4.github.io/blog/2025-09-22-first-llvm-patch.html</id>
+    <published>2025-09-22T00:00:00Z</published>
+    <updated>2025-09-22T00:00:00Z</updated>
+    <summary>Documenting the work behind LLVM PR #158778.</summary>
+  </entry>
+</feed>

@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A Pass-Order Study in Tubular — Aditya Chaudhari</title>
+    <meta name="description" content="Study of pass-order sensitivity in Tubular: experiment design, data pipeline, and key findings." />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <p class="blog-nav">
+          <a href="../index.html">Aditya Chaudhari</a> / <a href="index.html">posts</a>
+        </p>
+      </header>
+
+      <hr />
+
+      <main>
+        <article class="post-content">
+          <h1>A Pass-Order Study in Tubular</h1>
+          <p class="post-meta">October 28, 2025</p>
+
+          <p>
+            Technical report:
+            <a href="../pass_order_study.pdf" target="_blank" rel="noopener noreferrer">link</a>
+          </p>
+
+          <p>
+            This post documents the research process behind my recent exploration of
+            optimization pass ordering in Tubular, a small compiler that emits WebAssembly
+            Text (WAT), I originally built for my class CSE 450, but kept developing it &mdash;
+            adding optimization passes, configurable pass ordering, and the data pipelines
+            described here. The accompanying report contains all tables and quantitative
+            results; here I focus on the methodology &mdash; how the compiler and experiments
+            were designed, how the data pipeline evolved, and what lessons emerged about making
+            self-driven research reproducible.
+          </p>
+
+          <h2>1. Motivation and Scope</h2>
+          <p>
+            Tubular began as a teaching project: a C++20 implementation of the classic
+            frontend&ndash;middle&ndash;backend pipeline for a simple imperative language. Once
+            the core pipeline was stable (lexer, parser, type system, WAT generator), I added
+            three optimization passes:
+          </p>
+          <ul>
+            <li>FunctionInliningPass (small/pure functions),</li>
+            <li>LoopUnrollingPass (affine while loops with literal bounds), and</li>
+            <li>TailRecursionPass (loopification via a dedicated <code>ASTNode_TailCallLoop</code>).</li>
+          </ul>
+          <p>
+            Each pass worked in isolation, but I wanted to replicate a long-standing
+            observation from production compilers: the order in which passes run can influence
+            the final code. Rather than rely on anecdotes, I decided to quantify that effect in
+            Tubular's controlled setting.
+          </p>
+          <p>Research question:</p>
+          <blockquote>
+            When does the ordering of inlining, unrolling, and tail recursion elimination
+            matter for small WebAssembly kernels, and by how much?
+          </blockquote>
+
+          <h2>2. Building the Experimental Substrate</h2>
+
+          <h3>2.1 Configurable Pass Ordering</h3>
+          <p>
+            I introduced a <code>--pass-order=inline,unroll,tail</code> flag (arbitrary
+            permutation) and refactored <code>Tubular::RunOptimizationPasses</code> to schedule
+            passes dynamically. This required:
+          </p>
+          <ul>
+            <li>A shared AST cloner (<code>src/core/ASTCloner.hpp</code>) capable of deep-copying every node type.</li>
+            <li>Defensive pass implementations (e.g., unroll respects break/continue, inliner clones call arguments cautiously).</li>
+            <li>A CLI parser that validates permutations and meaningful combinations (<code>--unroll-factor</code>, <code>--no-inline</code>, <code>--tail=off</code>).</li>
+          </ul>
+
+          <h3>2.2 Curated Benchmark Suite</h3>
+          <p>
+            To probe distinct behaviors, I created ten workloads under
+            <code>research_tests/</code>, each returning a deterministic integer:
+          </p>
+          <ol>
+            <li>recursive Fibonacci (rt01),</li>
+            <li>tail-recursive factorial (rt02),</li>
+            <li>simple loop summation (rt03),</li>
+            <li>stride-heavy helper loop (rt04),</li>
+            <li>nested loop mix (rt05),</li>
+            <li>string wrapping with helper calls (rt06),</li>
+            <li>helper-heavy arithmetic loop (rt07),</li>
+            <li>branchy loop with continue (rt08),</li>
+            <li>matrix-style nested loop (rt09), and</li>
+            <li>a control baseline (rt10).</li>
+          </ol>
+          <p>
+            Each benchmark got a plain-text comment documenting the expected output. The
+            manifest (<code>research_tests/config.json</code>) ties benchmarks to expected
+            values, optimization variants, and pass orders.
+          </p>
+
+          <h3>2.3 Automation Infrastructure</h3>
+          <p>I wrote two scripts:</p>
+          <ul>
+            <li>
+              <code>scripts/collect_data.py</code>: rebuilds Tubular, runs the legacy
+              regression suite, executes every benchmark/variant/order combination with
+              warm-ups and timed runs, and writes
+              <code>artifacts/research/results.csv</code> + <code>summary.json</code>.
+            </li>
+            <li>
+              <code>scripts/repeat_collection.py</code>: orchestrates multiple runs (default
+              3), storing each run in <code>artifacts/research/batch_runs/runN/</code> with
+              logs and metadata.
+            </li>
+          </ul>
+          <p>Key design decisions:</p>
+          <ul>
+            <li>Warm-up iterations precede timing to avoid cold-start bias.</li>
+            <li>Node.js executes <code>.wasm</code> outputs because it's easy to script, but the framework is runtime-agnostic.</li>
+            <li>Runs are verbose by default (<code>[RUN …]</code> / <code>[OK …]</code>) so long sweeps show progress and become easier to debug.</li>
+          </ul>
+
+          <h2>3. From Single Runs to Robust Data</h2>
+
+          <h3>3.1 First Iteration: Single Sweep</h3>
+          <p>
+            Initially I built the pipeline with 5 timed runs per configuration. It quickly
+            highlighted order-dependent spikes (nested loops, helper-heavy workloads), but
+            conclusions felt brittle. Repeating the sweep manually showed some order swaps,
+            suggesting more samples were needed.
+          </p>
+
+          <h3>3.2 Scaling Up</h3>
+          <p>
+            I changed the manifest to <code>runs=50, warmup_runs=10</code>. Each sweep now
+            executes 360 combinations &times; 50 runs = 18,000 timed executions. Runtime per
+            sweep went from ~2 minutes to ~10 minutes, still manageable.
+          </p>
+
+          <h3>3.3 Multi-Run Validation</h3>
+          <p>
+            With <code>scripts/repeat_collection.py --runs 3</code>, I ran the full pipeline
+            three times (each including the regression suite). Post-run analysis showed:
+          </p>
+          <ul>
+            <li>Best-order medians vary only ~0.33 ms on average (max ~1.34 ms).</li>
+            <li>Worst-order medians vary ~0.49 ms on average.</li>
+            <li>The absolute gaps are small, but they're enough for the "winning" order to flip between runs when the contenders are separated by tenths of a millisecond.</li>
+          </ul>
+          <p>
+            Rather than chase a single "true" ordering, I normalized by computing regret: for
+            each row (benchmark, variant, run), the percentage above that row's best-order
+            median. That provided a risk profile per order (mean, median, 95th percentile).
+          </p>
+
+          <h2>4. Analysis Approach</h2>
+
+          <h3>4.1 Regret Rather Than Absolute Time</h3>
+          <p>
+            Absolute medians across orders differ by only ~0.25 % on average. Regret (excess
+            percentage vs. per-row best) is more informative when ranking orders. I plotted the
+            empirical CDF: inline &rarr; tail &rarr; unroll consistently has the lowest mean and
+            95th percentile regret, making it the best "fixed" order for risk-averse tuning.
+          </p>
+
+          <h3>4.2 Win Shares and Dominance</h3>
+          <p>
+            To capture "who wins where," I computed win shares per benchmark/order and produced
+            stacked bar charts. Some benchmarks (e.g., rt01-fib-recursive) showed fragmented
+            shares, implying no stable order; others (e.g., rt05-nested-mix) had a clear
+            dominant color.
+          </p>
+          <p>
+            I also calculated a "dominance score": fraction of wins captured by the best order
+            for each benchmark. Long bars = robust winners; short bars = contested cases.
+          </p>
+
+          <h3>4.3 Sensitivity by Unroll Factor</h3>
+          <p>
+            By slicing rows by <code>--unroll-factor</code>, I found distribution medians rising
+            with the factor: unroll-8 cases showed larger best&ndash;worst gaps than unroll-4 or
+            no unrolling. A violin plot captured this visually.
+          </p>
+
+          <h3>4.4 Static Feature Correlation</h3>
+          <p>Using the feature table, I inspected patterns:</p>
+          <ul>
+            <li>Tail recursion (rt02) prefers orders that loopify before unrolling.</li>
+            <li>Nested loops (rt05, rt09) lean toward inline-first sequences.</li>
+            <li>Branch-heavy loops (rt08) favor tail-first ordering to simplify control before unrolling.</li>
+          </ul>
+          <p>
+            This hints that even simple static features can guide pass selection, a good
+            direction for "future work."
+          </p>
+
+          <h2>5. Reproducibility Checklist</h2>
+          <p>All artifacts mentioned in the report live in Git:</p>
+          <ul>
+            <li>Benchmarks: <code>research_tests/*.tube</code></li>
+            <li>Scripts: <code>scripts/collect_data.py</code>, <code>scripts/repeat_collection.py</code></li>
+            <li>Raw data: <code>artifacts/research/batch_runs/run*/{summary.json, results.csv, collect.log}</code></li>
+            <li>Aggregated metrics: <code>artifacts/research/aggregated_metrics.json</code></li>
+            <li>Tables for the report: <code>docs/figures/*.csv</code></li>
+            <li>LaTeX report: <code>docs/technical_report.tex</code>.</li>
+          </ul>
+          <p>Re-run the experiment in one command:</p>
+          <pre><code>python3 scripts/collect_data.py</code></pre>
+          <p>Steamroll the entire batch (three runs):</p>
+          <pre><code>./scripts/repeat_collection.py --runs 3</code></pre>
+          <p>
+            Everything is self-contained: the technical report references the scripts and
+            directories explicitly for reviewers.
+          </p>
+
+          <h2>6. Lessons Learned</h2>
+          <ol>
+            <li>Automate early. The first version used manual scripts; rerunning by hand highlighted the need for <code>collect_data.py</code> and verbose logging.</li>
+            <li>Sample heavily. With only five runs per configuration, outliers dominated. Jumping to 50 runs smoothed noise and made regret analysis meaningful.</li>
+            <li>Normalize comparisons. Regret (and win shares) communicate risk better than absolute medians.</li>
+            <li>Correlate with structure. Static features &mdash; loop depth, tail recursion, branching &mdash; provided intuitive explanations for the observed "winners."</li>
+            <li>Version everything. Raw and aggregated data are stored alongside code; the report is reproducible down to the CSV tables.</li>
+          </ol>
+
+          <h2>7. Future Directions</h2>
+          <ul>
+            <li>External runtimes: Replicate results under Wasmtime (AOT + JIT) to see if host optimizations change the order rankings.</li>
+            <li>Additional passes: Introduce dead-code elimination or common subexpression elimination to see if the "robust" order persists.</li>
+            <li>Feature-driven selection: Train a simple heuristic or classifier on the existing dataset to choose pass order per benchmark.</li>
+            <li>Longer kernels: Port the methodology to larger programs or real workloads to test scalability.</li>
+          </ul>
+          <p>
+            For the full quantitative treatment (regret CDFs, stacked win-share bars,
+            unroll-factor vioplots, and detailed tables), see the
+            <a href="../pass_order_study.pdf" target="_blank" rel="noopener noreferrer">technical report</a>.
+            All code, data, and plots live in the repository
+            (<a href="https://github.com/AdityaC4/tubular-upgrade" target="_blank" rel="noopener noreferrer">github.com/AdityaC4/tubular-upgrade</a>).
+          </p>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <hr />
+        <p><a href="index.html">&larr; All posts</a></p>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<!--
+  NEW POST CHECKLIST:
+  1. Copy this file to  YYYY-MM-DD-some-slug.html  (date = publish date)
+  2. Change <title> and <meta name="description">
+  3. Change the <h1> and the <p class="post-meta"> date
+  4. Write the body inside <article>
+  5. Add one <li> to blog/index.html (newest at top)
+
+  Building blocks you can use inside the article:
+    <h2>Section</h2> <h3>Subsection</h3>
+    <p>…</p>  <ul><li>…</li></ul>  <ol><li>…</li></ol>
+    inline code: <code>foo()</code>
+    code block:  <pre><code>line one
+line two</code></pre>
+    quote: <blockquote>…</blockquote>
+    link: <a href="https://…" target="_blank" rel="noopener noreferrer">text</a>
+    image (optional): <figure class="post-hero"><img src="../assets/NAME.png" alt="…" /><figcaption>credit</figcaption></figure>
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>POST TITLE — Aditya Chaudhari</title>
+    <meta name="description" content="One-line summary (shows in Google results)." />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <p class="blog-nav">
+          <a href="../index.html">Aditya Chaudhari</a> / <a href="index.html">posts</a>
+        </p>
+      </header>
+
+      <hr />
+
+      <main>
+        <article class="post-content">
+          <h1>Post Title</h1>
+          <p class="post-meta">Month DD, YYYY</p>
+
+          <p>First paragraph…</p>
+
+          <h2>Section</h2>
+          <p>…</p>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <hr />
+        <p><a href="index.html">&larr; All posts</a></p>
+      </footer>
+    </div>
+  </body>
+</html>
