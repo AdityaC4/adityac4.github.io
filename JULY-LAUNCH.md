@@ -66,6 +66,7 @@ Without this flip, the new workflow runs but the site won't publish.
 
 - [ ] https://adityac4.github.io/ — landing page
 - [ ] https://adityac4.github.io/blog/ — post list
+- [ ] https://adityac4.github.io/feed.xml — Atom feed (valid XML, posts listed)
 - [ ] https://adityac4.github.io/pass_order_study.pdf — technical report (kept at root so the CV link survives)
 - [ ] Each blog post opens and code blocks render
 - [ ] CV [Email] / [CV] / [Blog] / [GitHub] / [LinkedIn] links work
@@ -83,7 +84,8 @@ Without this flip, the new workflow runs but the site won't publish.
 - The old `gh-pages` branch (Zola build output) is now unused. Safe to delete later, or leave it.
 - Adding a future blog post: copy `blog/_TEMPLATE.html`, rename with a date prefix
   (`YYYY-MM-DD-slug.html`), edit title/description/date, write the body, add one `<li>` to
-  `blog/index.html`. No build step.
+  `blog/index.html`, and one `<entry>` to `feed.xml` (also bump the feed's top-level
+  `<updated>`). No build step.
 - This file (`JULY-LAUNCH.md`) is served publicly once live. Delete it after launch if you
   don't want it reachable.
 ```
