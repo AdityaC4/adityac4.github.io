@@ -10,3 +10,6 @@ yarn-error.log*
 # Python
 __pycache__/
 *.py[cod]
+
+# Claude Code local tooling
+.claude/
