@@ -23,6 +23,7 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Aditya Prashant Chaudhari",
+      "alternateName": "आदित्य चौधरी",
       "url": "https://adityac4.github.io",
       "email": "achau177@ucr.edu",
       "affiliation": {
@@ -49,8 +50,9 @@
             ><span class="name-rest">HAUDHARI</span></span
           >
         </h1>
-        <p class="site-subtitle">
-          PhD Student at the University of California, Riverside
+        <p class="name-pronunciation">
+          pronounced <span class="name-respell">aa-dit-ya chau-dha-ree</span>
+          <span class="name-devanagari" lang="mr">आदित्य चौधरी</span>
         </p>
       </header>
 
@@ -59,22 +61,37 @@
       <main>
         <section id="about" aria-label="About">
           <div class="intro-copy">
-            <p>
-              <img
-                src="assets/AdityaPrashantChaudhari.jpg"
-                alt="Portrait of Aditya Chaudhari"
-                class="intro-photo"
-                width="120"
-                height="164"
-              />
-              I am Aditya Chaudhari (आदित्य चौधरी in Marathi), an incoming PhD
-              student in Computer Science at
+            <img
+              src="assets/AdityaPrashantChaudhari.jpg"
+              alt="Portrait of Aditya Chaudhari"
+              class="intro-photo"
+              width="140"
+              height="191"
+            />
+            <p class="site-subtitle">PhD Student</p>
+            <p class="site-affiliation">
+              <a
+                href="https://www.cs.ucr.edu/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Department of Computer Science and Engineering</a
+              ><br />
+              <a
+                href="https://engr.ucr.edu/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Marlan and Rosemary Bourns College of Engineering</a
+              ><br />
               <a
                 href="https://www.ucr.edu/about-ucr"
                 target="_blank"
                 rel="noopener noreferrer"
                 >University of California, Riverside</a
-              >, working under the guidance of
+              >
+            </p>
+            <p>
+              I am an incoming PhD student in Computer Science, working under
+              the guidance of
               <a
                 href="https://dongura.me/"
                 target="_blank"
@@ -127,8 +144,9 @@
         <hr class="intro-divider" />
 
         <section class="content-list">
+          <h2 class="section-heading">Research Interests</h2>
           <p>
-            <strong>Research Interests.</strong> I am interested in questions
+            I am interested in questions
             about correctness -- about whether the systems people rely on every
             day actually do what they are supposed to do. Software is full of
             compromises that made sense at the time and then quietly became the
@@ -136,16 +154,23 @@
             correctness at the intersection of formal methods, ML/NN, and
             compilers.
           </p>
-          <details class="plain-details compact-details" id="news" open>
-            <summary>News</summary>
+          <h2 class="section-heading" id="news">News</h2>
+          <ul class="detail-list">
+            <li>
+              <span class="news-date">[09/2026]</span>
+              Starting a PhD position at the University of California,
+              Riverside.
+            </li>
+          </ul>
+          <!-- Once this passes ~6 entries, keep the recent ones in the list
+               above and move older ones into a collapsible tail:
+          <details class="plain-details">
+            <summary>Earlier</summary>
             <ul class="detail-list">
-              <li>
-                <span class="news-date">September 2026</span>
-                Starting a PhD position at the University of California,
-                Riverside.
-              </li>
+              <li><span class="news-date">[05/2026]</span> Older entry.</li>
             </ul>
           </details>
+          -->
           <!-- <details class="plain-details compact-details" id="research"> -->
           <!--   <summary>Research</summary> -->
           <!--   <ul class="detail-list"> -->
@@ -194,7 +219,7 @@
 
       <footer class="site-footer">
         <hr />
-        <p><strong>Last updated:</strong> July 2026</p>
+        <p><strong>Last updated:</strong> September 2026</p>
         <p class="footer-quote">
           “The struggle itself toward the heights is enough to fill a man's
           heart. One must imagine Sisyphus happy.”
