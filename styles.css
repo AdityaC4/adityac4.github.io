@@ -7,8 +7,8 @@ body {
   background: #fffdf7;
   color: #241f1a;
   font-family: Charter, "Bitstream Charter", "Iowan Old Style", Georgia, serif;
-  font-size: 17px;
-  line-height: 1.5;
+  font-size: 18px;
+  line-height: 1.55;
 }
 
 a {
@@ -133,7 +133,7 @@ main {
 section p,
 section li,
 .site-footer p {
-  margin: 0.35rem 0;
+  margin: 0.6rem 0;
 }
 
 .profile-links {
@@ -248,7 +248,7 @@ section li,
 
 .post-content p,
 .post-content li {
-  margin: 0.5rem 0;
+  margin: 0.85rem 0;
 }
 
 .post-content blockquote {

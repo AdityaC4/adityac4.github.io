@@ -2,7 +2,8 @@
 <!--
   NEW POST CHECKLIST:
   1. Copy this file to  YYYY-MM-DD-some-slug.html  (date = publish date)
-  2. Change <title> and <meta name="description">
+  2. Change <title>, <meta name="description">, and the matching
+     og:title/og:description/og:url meta tags
   3. Change the <h1> and the <p class="post-meta"> date
   4. Write the body inside <article>
   5. Add one <li> to blog/index.html (newest at top)
@@ -23,6 +24,12 @@ line two</code></pre>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>POST TITLE — Aditya Chaudhari</title>
     <meta name="description" content="One-line summary (shows in Google results)." />
+    <meta property="og:title" content="POST TITLE — Aditya Chaudhari" />
+    <meta property="og:description" content="One-line summary (shows in Google results)." />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://adityac4.github.io/assets/NGC_1929_from_Spitzer_Chandra_ESO_desktop.jpg" />
+    <meta property="og:url" content="https://adityac4.github.io/blog/YYYY-MM-DD-some-slug.html" />
+    <meta name="twitter:card" content="summary" />
     <link rel="stylesheet" href="../styles.css" />
   </head>
   <body>
