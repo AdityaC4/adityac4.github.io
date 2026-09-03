@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Not content — scaffolding and local build tooling.
+Disallow: /blog/_TEMPLATE.txt
+Disallow: /build.py
+Disallow: /dev-server.py
+
+Sitemap: https://adityac4.github.io/sitemap.xml
