@@ -191,26 +191,6 @@ section li,
   margin-top: 0.65rem;
 }
 
-.compact-details summary {
-  display: inline;
-}
-
-.compact-details summary::before {
-  content: "\25B8  ";
-}
-
-.compact-details[open] summary::before {
-  content: "\25BE  ";
-}
-
-.compact-details summary::after {
-  content: ".";
-}
-
-.compact-details > :not(summary) {
-  margin-left: 1.1rem;
-}
-
 /* Blog */
 .blog-nav {
   margin: 0;
